@@ -2,4 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-
+body{
+    background-color: black;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    height: 100vh;
+}
+.grey{
+    color: #8D8484;
+}

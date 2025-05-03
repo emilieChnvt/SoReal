@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% form_theme registrationForm 'tailwind_2_layout.html.twig' %}
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div class="h-full flex  items-center justify-center">
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm) }}
+        <div class="flex flex-col  gap-y-[185px]">
+
+                {{ form_row(registrationForm.email, {
+                    label: 'Quel est ton adresse mail ?',
+                    label_attr: { class: 'sm:text-5xl text-white'},
+                    row_attr: { class: 'flex flex-col items-center gap-y-[30px]'},
+                    attr: {
+                        class: 'bg-transparent border-none placeholder-[#8D8484] placeholder:text-4xl text-white font-bold',
+                        placeholder: 'mail@mail.com'
+                    }
+                }) }}
+
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Entre un mot de passe',
+                    label_attr: { class: 'sm:text-5xl text-white'},
+                    row_attr: { class: 'flex flex-col items-center gap-y-[30px]'},
+                    attr: {
+                        class: 'bg-transparent border-none placeholder-[#8D8484] placeholder:text-4xl text-white font-bold',
+                        placeholder: 'Mot de passe'
+                    }
+                }) }}
+
+            <div class="flex flex-col items-center justify-center gap-y-[50px]">
+                <div class="flex items-center gap-x-[25px]">
+                    {{ form_widget(registrationForm.agreeTerms) }}
+                    {{ form_label(registrationForm.agreeTerms, null, { label_attr: { class: 'text-white' } }) }}
+                    {{ form_errors(registrationForm.agreeTerms) }}
+                </div>
+
+                <button type="submit" class="btn py-4 px-5 rounded-xl bg-white w-fit text-3xl">Créer mon compte</button>
+            </div>
+                {{ form_end(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}

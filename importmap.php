@@ -25,4 +25,13 @@ return [
     '@hotwired/turbo' => [
         'version' => '8.0.13',
     ],
+    'tailwind' => [
+        'version' => '4.0.0',
+    ],
+    'install' => [
+        'version' => '0.13.0',
+    ],
+    'update' => [
+        'version' => '0.7.4',
+    ],
 ];
