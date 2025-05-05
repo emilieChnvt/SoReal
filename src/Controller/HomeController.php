@@ -21,27 +21,7 @@ final class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
-    #[Route('/search', name: 'search')]
-    public function search(Request $request, EntityManagerInterface $manager): Response
-    {
-        $image =new Image();
-        $form = $this->createForm(UserImageForm::class);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('imageFile')->getData();
-            if ($imageFile) {
-                $image->setImageFile($imageFile);
-            }
-            $manager->persist($image);
-            $manager->flush();
-
-        }
-
-        return $this->render('search/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
 
 
 }

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% block body %}
+
+
+
+<div class="my-8">
+
+    <img src="{{ vich_uploader_asset(image, 'imageFile') | imagine_filter('bereal') }}" style="border-radius: 15px;" alt="">
+
+    {{ form_start(form) }}
+    {{ form_widget(form.content,{
+        attr:{
+            placeholder : 'Ajoute une description...',
+            class : 'bg-transparent w-full py-0px border-none placeholder-[#8D8484]'
+        }
+    }) }}
+
+    <div class="flex items-center justify-center my-10">
+        <button type="submit" class="flex items-center justify-center text-white font-semibold text-3xl">
+            <span class="flex items-center">
+                Envoyez
+                <span class="ml-2 flex items-center">
+                    {{ ux_icon('material-symbols-light:play-arrow-outline-rounded', { class : 'w-[35px] h-[35px] relative top-[2px]' }) }}
+                </span>
+            </span>
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+
+
+
+</div>
+{% endblock %}
+
+
+
+{% block title %}
+
+{% endblock %}
+

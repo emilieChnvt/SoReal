@@ -95,4 +95,11 @@ class Image
 
         return $this;
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
 }
