@@ -1,7 +1,25 @@
 {# templates/search/index.html.twig #}
-{{ form(form) }}
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% block body %}
+
+
+{{ form_start(form) }}
+    {{ form_row(form.imageFile, {
+        attr: {
+            'accept': 'image/*',
+            'capture': 'environment'
+        }
+    }) }}
+    <button type="submit">send</button>
+{{ form_end(form) }}
+
+
 
 <form action="/upload" method="POST" enctype="multipart/form-data">
     <input type="file" name="image" accept="image/*" capture="environment" required>
     <button type="submit">Envoyer</button>
 </form>
+
+
+{% endblock %}

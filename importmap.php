@@ -51,4 +51,18 @@ return [
         'version' => '2.4.3',
         'type' => 'css',
     ],
+    'bootstrap' => [
+        'version' => '5.3.5',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.5',
+        'type' => 'css',
+    ],
+    'tom-select/dist/css/tom-select.bootstrap5.css' => [
+        'version' => '2.4.3',
+        'type' => 'css',
+    ],
 ];

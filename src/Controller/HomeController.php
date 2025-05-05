@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Form\UserForm;
+use App\Form\UserImageForm;
+use App\Form\UserSearchForm;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +23,7 @@ final class HomeController extends AbstractController
     #[Route('/search', name: 'search')]
     public function search(Request $request, EntityManagerInterface $em): Response
     {
-        $form = $this->createForm(UserForm::class);
+        $form = $this->createForm(UserImageForm::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -31,4 +33,6 @@ final class HomeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
 }
