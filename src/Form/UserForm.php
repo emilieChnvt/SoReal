@@ -15,20 +15,15 @@ class UserForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EntityType::class, [
-                'class' => User::class, // Entité User pour l'autocomplétion
-                'placeholder' => 'Search for a user...',
-                'required' => false,
-                'attr' => [
-                    'class' => 'bg-transparent text-white',  // Personnalise le style si nécessaire
-                ],
-            ]);
+            ->add('email', UserAutocompleteField::class,
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'autocomplete' => true,
         ]);
     }
 }

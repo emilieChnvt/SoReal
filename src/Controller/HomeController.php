@@ -25,8 +25,6 @@ final class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->get('user')->getData();
-            // faire quelque chose avec le produit choisi
         }
 
         return $this->render('search/index.html.twig', [
