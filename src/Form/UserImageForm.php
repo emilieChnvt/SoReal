@@ -15,7 +15,13 @@ class UserImageForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('imageFile', VichFileType::class, []);
+            ->add('imageFile', VichFileType::class, [
+
+                'attr' => [
+                    'accept' => 'image/*',
+                    'capture' => 'environment',
+                ],
+            ]);
 
         ;
     }
