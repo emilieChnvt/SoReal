@@ -16,10 +16,8 @@ class ProfileForm extends AbstractType
     {
         $builder
             ->add('displayName')
-            ->add('image', EntityType::class, [
-                'class' => Image::class,
-                'choice_label' => 'id',
-            ])
+            ->add('Bio')
+
 
         ;
     }

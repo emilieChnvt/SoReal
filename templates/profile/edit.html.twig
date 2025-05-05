@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    <div class="flex justify-between text-white">
+            <a href="{{ path('app_profile', {id:app.user.id}) }}">Annuler</a>
+            <p class="font-semibold">Modifier le profil</p>
+            <button type="submit">Enregitrer</button>
+    </div>
+    <img class=" h-[130px] w-[130px] rounded-full border border-[#8D8484]" src="" />
+
+    <div class="flex items-center bg-transparent border-t border-b border-gray-300">
+        {{ form_label(form.displayName, null, {'label_attr': {'class': 'mr-2 text-white w-full py-2'}}) }}
+        {{ form_widget(form.displayName, {'attr': {'class': 'bg-transparent  border-none focus:outline-none'}}) }}
+    </div>
+
+
+    <div class="flex items-center bg-transparent border-t border-b border-gray-300">
+        {{ form_label(form.Bio, null, {'label_attr': {'class': 'mr-2 text-white w-full py-2'}}) }}
+        {{ form_widget(form.Bio, {'attr': {'class': 'bg-transparent  border-none focus:outline-none'}}) }}
+    </div>
+
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

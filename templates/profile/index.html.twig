@@ -10,7 +10,7 @@
             <div class="w-full text-center text-white text-xs font-semibold break-words">name</div>
             <div class="w-full text-center text-[#8D8484] text-xs font-normal break-words">bio</div>
             <div class="px-2 py-1 bg-white rounded-full flex justify-center items-center gap-2">
-                <a href="" class="text-center text-black text-xs font-normal break-words">+ Ajouter une bio</a>
+                <a href="{{ path('app_profile_edit', {id : app.user.id}) }}" class="text-center text-black text-xs font-normal break-words">+ Ajouter une bio</a>
             </div>
         </div>
         <div class="w-[36px] flex flex-col justify-start items-center gap-1">
