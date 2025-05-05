@@ -32,11 +32,13 @@
 
     <!-- Profil -->
     <div class=" gap-1">
-        <a href="" class="flex flex-col items-center">
-            <img class="w-[26px] h-[26px] rounded-full border border-[#8D8484]" src="https://placehold.co/26x26" />
-            <div class="w-[46px] flex flex-col items-center gap-1">
-                <div class="text-center text-white text-xs font-normal">Profil</div>
-            </div>
-        </a>
+        {% if app.user %}
+            <a href="{{ path('app_profile', {id : app.user.id}) }}" class="flex flex-col items-center">
+                <img class="w-[26px] h-[26px] rounded-full border border-[#8D8484]" src="https://placehold.co/26x26" />
+                <div class="w-[46px] flex flex-col items-center gap-1">
+                    <div class="text-center text-white text-xs font-normal">Profil</div>
+                </div>
+            </a>
+        {% endif %}
     </div>
 </div>

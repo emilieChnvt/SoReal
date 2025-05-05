@@ -23,6 +23,9 @@ class Profile
     #[ORM\JoinColumn(nullable: false)]
     private ?User $ofUser = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Bio = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Profile
     public function setOfUser(User $ofUser): static
     {
         $this->ofUser = $ofUser;
+
+        return $this;
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->Bio;
+    }
+
+    public function setBio(?string $Bio): static
+    {
+        $this->Bio = $Bio;
 
         return $this;
     }

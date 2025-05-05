@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+{% if app.user %}
+    <div class="w-full h-full px-[112px] flex flex-col justify-start items-center gap-5">
+        <div class="w-full flex flex-col justify-start items-center gap-4">
+            <img class=" h-[169px] w-[169px] rounded-full border border-[#8D8484]" src="" />
+            <div class="w-full text-center text-white text-xs font-semibold break-words">name</div>
+            <div class="w-full text-center text-[#8D8484] text-xs font-normal break-words">bio</div>
+            <div class="px-2 py-1 bg-white rounded-full flex justify-center items-center gap-2">
+                <a href="" class="text-center text-black text-xs font-normal break-words">+ Ajouter une bio</a>
+            </div>
+        </div>
+        <div class="w-[36px] flex flex-col justify-start items-center gap-1">
+            <div class="w-full text-center text-white text-xs font-normal break-words">23</div>
+            <div class="w-full text-center text-[#8D8484] text-xs font-normal break-words">Amis</div>
+        </div>
+    </div>
+
+{% endif %}
+{% endblock %}
