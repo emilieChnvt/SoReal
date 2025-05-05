@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+   <div  class="my-8 ">
+       {% for post in posts %}
+           <div class="my-6">
+               <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}" style="border-radius: 15px;" alt="">
+               <a href="" class="bg-transparent w-full py-0px border-none text-[#8D8484]" aria-placeholder="">Ajoute une commentaire...</a>
+
+           </div>
+       {% endfor %}
+   </div>
+{% endblock %}
