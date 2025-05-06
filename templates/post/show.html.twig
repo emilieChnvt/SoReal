@@ -1,21 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PostController!{% endblock %}
-
 {% block body %}
-    <div class="">
-        {% for post in posts %}
+    <div class="flex flex-col">
             <div class="my-6 bg-black text-white p-4 rounded-lg">
                 <div class="flex items-center mb-2">
-
+                    <div>
+                        <a href="{{ path('app_posts') }}">{{ ux_icon('fluent:ios-arrow-24-filled', { class: 'w-[20px] h-[20px]' }) }}</a>
+                    </div>
                     {% if post.author.image %}
                         <img src="{{ vich_uploader_asset(post.author.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
                     {% endif %}
                     <div class="text-sm">
                         <strong>{{ post.author.displayName }}</strong><br>
                         <p>{{ post.createAt|date('d/m/Y H:i') }}</p>
-
-
                     </div>
                 </div>
 
@@ -23,7 +20,7 @@
                     <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}"
                          style="border-radius: 15px;" alt="" class="w-full mb-2">
                     {% if app.user.profile.ofUser == post.author %}
-                    <span class="absolute bottom-2 right-2  p-2 border-1 rounded-full " >{{ ux_icon('mynaui:trash', { class: 'w-[15px] h-[15px]' }) }}</span>
+                        <span class="absolute bottom-2 right-2  p-2 border-1 rounded-full " >{{ ux_icon('mynaui:trash', { class: 'w-[15px] h-[15px]' }) }}</span>
 
                     {% endif %}
                 </div>
@@ -34,12 +31,32 @@
                     <button class="text-white">🤍</button>
                 </div>
 
-                <a href="{{ path('app_post_show', {id : post.id}) }}" class="bg-transparent w-full py-2 border-none text-[#8D8484] mt-2">
+                <a href="" class="bg-transparent w-full py-2 border-none text-[#8D8484] mt-2">
                     Ajoute un commentaire
                 </a>
 
             </div>
-        {% endfor %}
+        <div class="flex flex-col">
+            <h2 class="text-white font-semibold">Commentaires</h2>
+            {% for comment in post.comments %}
+                <div class="flex items-center  border-y my-2 p-2 ">
+                    {% if post.author.image %}
+                        <img src="{{ vich_uploader_asset(post.author.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                    {% endif %}
+                    <div class="flex flex-col p-0">
+                        <p class="text-white text-xs">{{ comment.author.displayname }}</p>
+                        <p class="text-white">{{ comment.content }}</p>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
+
 {% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

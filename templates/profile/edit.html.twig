@@ -3,7 +3,7 @@
 {% block body %}
     {{ form_start(form) }}
 
-    <div class="flex justify-between text-white">
+    <div class="flex justify-between text-white my-6">
             <a href="{{ path('app_profile', {id:app.user.profile.id}) }}">Annuler</a>
             <p class="font-semibold">Modifier le profil</p>
             <button type="submit">Enregistrer</button>

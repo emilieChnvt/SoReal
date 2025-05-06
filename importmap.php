@@ -52,13 +52,13 @@ return [
         'type' => 'css',
     ],
     'bootstrap' => [
-        'version' => '5.3.5',
+        'version' => '5.3.6',
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
     ],
     'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.5',
+        'version' => '5.3.6',
         'type' => 'css',
     ],
     'tom-select/dist/css/tom-select.bootstrap5.css' => [

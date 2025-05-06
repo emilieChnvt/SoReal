@@ -5,8 +5,18 @@
 {% block body %}
 {% if app.user %}
     <div class="w-full h-full px-[112px] flex flex-col justify-start items-center gap-5">
-        <div class="w-full flex flex-col justify-start items-center gap-4">
-            <img class=" h-[169px] w-[169px] rounded-full border border-[#8D8484]" src="{{ vich_uploader_asset(app.user.profile.image, 'imageFile') | imagine_filter('profilePage') }}" />
+        <div class="w-full flex flex-col justify-start items-center gap-4 my-6">
+            {% if app.user.profile.image %}
+                <a href="{{ path('app_profile_add_image', {id: app.user.profile.id}) }}">
+                    <img class="  rounded-full border border-[#8D8484]" src="{{ vich_uploader_asset(app.user.profile.image, 'imageFile') | imagine_filter('profilePage') }}" />
+
+                </a>
+            {% else %}
+                <a href="{{path('app_profile_add_image', {id: app.user.profile.id}) }}">
+                    <img class="  rounded-full border border-[#8D8484]" src="{{ asset('images/avatar.jpg') | imagine_filter('profilePage') }}" />
+
+                </a>
+            {% endif%}
             <div class="w-full text-center text-white text-xs font-semibold break-words">{{ app.user.profile.displayName }}</div>
             <div class="w-full text-center text-[#8D8484] text-xs font-normal break-words">{{ app.user.profile.bio }}</div>
             <div class="px-2 py-1 bg-white rounded-full flex justify-center items-center gap-2">

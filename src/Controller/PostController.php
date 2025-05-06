@@ -26,6 +26,16 @@ final class PostController extends AbstractController
         ]);
     }
 
+    #[Route('/posts/show/{id}', name: 'app_post_show')]
+    public function show(Post $post): Response
+    {
+        return $this->render('post/show.html.twig', [
+            'post' => $post,
+        ]);
+    }
+
+
+
     #[Route('/post/addImage', name: 'app_post_addImage')]
     public function addImage(Request $request, EntityManagerInterface $manager): Response
     {
@@ -60,7 +70,7 @@ final class PostController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setCreateAt(new \DateTime());
-            $post->setAuthor($this->getUser());
+            $post->setAuthor($this->getUser()->getProfile());
             $post->setImage($image);
             $manager->persist($post);
             $manager->flush();
