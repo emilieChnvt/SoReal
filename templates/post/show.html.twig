@@ -31,9 +31,25 @@
                     <button class="text-white">🤍</button>
                 </div>
 
-                <a href="" class="bg-transparent w-full py-2 border-none text-[#8D8484] mt-2">
-                    Ajoute un commentaire
-                </a>
+                <div class="">
+                    {{ form_start(commentForm, {"action": path('app_comment_create', {id:post.id}) }) }}
+
+                    {{ form_row(commentForm.content, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': 'Écris ton commentaire...',
+                            'class': 'w-full bg-transparent  border-none  py-2 text-sm '
+                        }
+                    }) }}
+
+                    <button type="submit" class="w-full py-2 border-none text-[#8D8484] mt-2">
+                        Ajoute un commentaire
+                    </button>
+
+                    {{ form_end(commentForm) }}
+                </div>
+
+
 
             </div>
         <div class="flex flex-col">
@@ -41,7 +57,7 @@
             {% for comment in post.comments %}
                 <div class="flex items-center  border-y my-2 p-2 ">
                     {% if post.author.image %}
-                        <img src="{{ vich_uploader_asset(post.author.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                        <img src="{{ vich_uploader_asset(app.user.profile.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
                     {% endif %}
                     <div class="flex flex-col p-0">
                         <p class="text-white text-xs">{{ comment.author.displayname }}</p>

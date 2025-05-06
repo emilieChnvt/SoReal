@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Image;
 use App\Entity\Post;
+use App\Form\CommentForm;
 use App\Form\PostForm;
 use App\Form\UserImageForm;
 use App\Repository\PostRepository;
@@ -29,8 +31,11 @@ final class PostController extends AbstractController
     #[Route('/posts/show/{id}', name: 'app_post_show')]
     public function show(Post $post): Response
     {
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentForm::class , $comment);
         return $this->render('post/show.html.twig', [
             'post' => $post,
+            'commentForm' => $commentForm->createView(),
         ]);
     }
 
