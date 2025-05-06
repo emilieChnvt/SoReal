@@ -3,44 +3,57 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<div class="flex items-center justify-center h-full">
-    <form method="post" >
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div class="min-h-screen bg-black flex justify-center px-4 py-6">
+        <form method="post" class="w-full max-w-md space-y-10">
+            {% if error %}
+                <div class="text-red-500 text-sm text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
+            {% if app.user %}
+                <div class="text-white text-sm text-center mb-3">
+                    Connecté en tant que {{ app.user.userIdentifier }},
+                    <a href="{{ path('app_logout') }}" class="underline">Se déconnecter</a>
+                </div>
+            {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <div class="flex flex-col  gap-y-[35px]">
-            <div class="flex flex-col items-center gap-y-[20px]">
-                <label for="inputEmail" class="sm:text-xl text-white">Email</label>
-                <input type="email"  name="email" placeholder="mail@mail.com" id="inputEmail" class=" bg-transparent border-none placeholder-[#8D8484] placeholder:text-xl  font-bold border-0" autocomplete="email" required autofocus>
-            </div>
-            <div class="flex flex-col items-center gap-y-[20px]">
-                <label for="inputPassword" class="sm:text-5xl text-white">Password</label>
-                <input type="password" name="password" id="inputPassword" placeholder="password..." class="border-none text-white placeholder-[#8D8484] placeholder:text-xl  font-bold bg-transparent" autocomplete="current-password" required>
-                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+            <h1 class="text-white text-2xl font-bold text-center">Connexion</h1>
 
-            </div>
-            <div class="checkbox flex flex-col items-center justify-center gap-y-[50px]">
-                <div class="flex items-center gap-x-4 text-white text-sm">
-                    <input type="checkbox" id="remember_me" name="_remember_me">
-                    <label for="remember_me">Remember me</label>
+            <div class="flex flex-col gap-y-8">
+                <!-- Email -->
+                <div class="flex flex-col gap-y-3">
+                    <label for="inputEmail" class="text-white text-lg sm:text-xl">Email</label>
+                    <input
+                            type="email"
+                            name="email"
+                            id="inputEmail"
+                            placeholder="mail@mail.com"
+                            class="w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg focus:outline-none"
+                    >
                 </div>
 
-                <button class="btn py-4 px-5 rounded-xl bg-white w-fit text-sm" type="submit">
-                    Sign in
-                </button>
+                <div class="flex flex-col gap-y-3">
+                    <label for="inputPassword" class="text-white text-lg sm:text-xl">Mot de passe</label>
+                    <input
+                            type="password"
+                            name="password"
+                            id="inputPassword"
+                            placeholder="Mot de passe..."
+                            class="w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg focus:outline-none"
+                    >
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                </div>
+
+                <div class="flex flex-col items-center gap-y-6">
+                    <div class="flex items-center gap-x-3 text-white text-sm">
+                        <input type="checkbox" id="remember_me" name="_remember_me" class="accent-white">
+                        <label for="remember_me">Se souvenir de moi</label>
+                    </div>
+
+                    <button type="submit" class="bg-white text-black font-semibold py-3 px-6 rounded-xl text-sm hover:bg-gray-200 transition">
+                        Se connecter
+                    </button>
+                </div>
             </div>
-        </div>
-
-
-
-    </form>
-</div>
+        </form>
+    </div>
 {% endblock %}

@@ -1,45 +1,50 @@
 {% extends 'base.html.twig' %}
 {% form_theme registrationForm 'tailwind_2_layout.html.twig' %}
+
 {% block title %}Register{% endblock %}
 
 {% block body %}
+    <div class="bg-black flex items-center r px-4 py-6  ">
+        <div class="w-full max-w-md space-y-8">
+            {{ form_errors(registrationForm) }}
 
-    <div class="h-full flex  items-center justify-center gap-y-[35px]">
-        {{ form_errors(registrationForm) }}
+            {{ form_start(registrationForm) }}
 
-        {{ form_start(registrationForm) }}
-        <div class="flex flex-col gap-y-[45px] ">
-
+            <div class="flex flex-col gap-y-10">
                 {{ form_row(registrationForm.email, {
                     label: 'Quel est ton adresse mail ?',
-                    label_attr: { class: 'sm:text-xl text-white'},
-                    row_attr: { class: 'flex flex-col items-center gap-y-[20px]'},
+                    label_attr: { class: 'text-white text-lg sm:text-xl font-semibold' },
+                    row_attr: { class: 'flex flex-col gap-y-3' },
                     attr: {
-                        class: 'bg-transparent border-none placeholder-[#8D8484] placeholder:text-xl font-bold',
+                        class: 'w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg focus:outline-none',
                         placeholder: 'mail@mail.com'
                     }
                 }) }}
 
                 {{ form_row(registrationForm.plainPassword, {
                     label: 'Entre un mot de passe',
-                    label_attr: { class: 'sm:text-xl text-white'},
-                    row_attr: { class: 'flex flex-col items-center gap-y-[20px]'},
+                    label_attr: { class: 'text-white text-lg sm:text-xl font-semibold' },
+                    row_attr: { class: 'flex flex-col gap-y-3' },
                     attr: {
-                        class: 'text-white bg-transparent border-none placeholder-[#8D8484] placeholder:text-xl font-bold',
+                        class: 'w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg focus:outline-none',
                         placeholder: 'Mot de passe'
                     }
                 }) }}
 
-            <div class="flex flex-col items-center justify-center gap-y-[50px]">
-                <div class="flex items-center gap-x-[25px]">
-                    {{ form_widget(registrationForm.agreeTerms) }}
-                    {{ form_label(registrationForm.agreeTerms, null, { label_attr: { class: 'text-white text-sm' } }) }}
-                    {{ form_errors(registrationForm.agreeTerms) }}
-                </div>
+                <div class="flex flex-col items-center gap-y-8">
+                    <div class="flex items-center gap-x-3">
+                        {{ form_widget(registrationForm.agreeTerms) }}
+                        {{ form_label(registrationForm.agreeTerms, null, { label_attr: { class: 'text-white text-sm' } }) }}
+                        {{ form_errors(registrationForm.agreeTerms) }}
+                    </div>
 
-                <button type="submit" class="btn py-4 px-5 rounded-xl bg-white w-fit text-sm">Créer mon compte</button>
+                    <button type="submit" class="bg-white text-black font-semibold py-3 px-6 rounded-xl text-sm hover:bg-gray-200 transition">
+                        Créer mon compte
+                    </button>
+                </div>
             </div>
-                {{ form_end(registrationForm) }}
+
+            {{ form_end(registrationForm) }}
         </div>
     </div>
 {% endblock %}
