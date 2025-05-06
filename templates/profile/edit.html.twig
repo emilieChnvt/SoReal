@@ -4,21 +4,21 @@
     {{ form_start(form) }}
 
     <div class="flex justify-between text-white">
-            <a href="{{ path('app_profile', {id:app.user.id}) }}">Annuler</a>
+            <a href="{{ path('app_profile', {id:app.user.profile.id}) }}">Annuler</a>
             <p class="font-semibold">Modifier le profil</p>
-            <button type="submit">Enregitrer</button>
+            <button type="submit">Enregistrer</button>
     </div>
     <div class="flex flex-col gap-y-[35px] mt-5">
         <div class="flex items-center justify-center">
 
             {% if app.user.profile.image %}
-                <a href="{{ path('app_profile_add_image', {id:profile.id}) }}">
-                    <img class=" h-[130px] w-[130px] rounded-full border border-[#8D8484]" src="{{ vich_uploader_asset(app.user.profile.image, 'imageFile') }}" />
+                <a href="{{ path('app_profile_add_image', {id: app.user.profile.id}) }}">
+                    <img class="  rounded-full border border-[#8D8484]" src="{{ vich_uploader_asset(app.user.profile.image, 'imageFile') | imagine_filter('profilePage') }}" />
 
                 </a>
             {% else %}
-                <a href="{{path('app_profile_add_image', {id: profile.id}) }}">
-                    <img class=" h-[130px] w-[130px] rounded-full border border-[#8D8484]" src="{{ asset('images/avatar.jpg') }}" />
+                <a href="{{path('app_profile_add_image', {id: app.user.profile.id}) }}">
+                    <img class="  rounded-full border border-[#8D8484]" src="{{ asset('images/avatar.jpg') | imagine_filter('profilePage') }}" />
 
                 </a>
             {% endif%}

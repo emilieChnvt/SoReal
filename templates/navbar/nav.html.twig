@@ -1,26 +1,23 @@
 <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full h-[7%] py-2 bg-[#3A3737] rounded-t-2xl flex justify-center items-center gap-[44px]">
-    <!-- Accueil -->
     <div class="w-[46px]  gap-1">
-        <a href="" class="flex flex-col items-center">
+        <a href="{{ path('app_posts') }}" class="flex flex-col items-center">
             <div class="w-[27px] h-[22px] text-[#8D8484]">
                 {{ ux_icon('material-symbols:home', { class: 'text-[#8D8484] w-[27px] h-[22px]' }) }}
             </div>
-            <div class="text-center text-white text-xs font-normal">Accueil</div>
+            <a href="" class="text-center text-white text-xs font-normal">Accueil</a>
         </a>
     </div>
 
-    <!-- Camera -->
     <div class="w-[60px] pb-[7px] flex flex-col items-start gap-2">
         <a href="">
             <div class="w-full p-2 bg-white rounded-[10px] flex justify-center items-center">
-                <div class="text-[#8D8484] w-[27px] h-[22px]">
+                <a href="{{ path('app_post_addImage') }}" class="text-[#8D8484] w-[27px] h-[22px]">
                     {{ ux_icon('bxs:camera', { class: 'text-[#8D8484] w-[27px] h-[22px]' }) }}
-                </div>
+                </a>
             </div>
         </a>
     </div>
 
-    <!-- Amis -->
     <div class="w-[46px]  gap-1">
         <a href="" class="flex flex-col items-center">
             <div class="w-[27px] h-[22px] text-[#8D8484]">
@@ -30,15 +27,19 @@
         </a>
     </div>
 
-    <!-- Profil -->
-    <div class=" gap-1">
+    <div class="flex flex-col justify-center items-center gap-1">
         {% if app.user %}
-            <a href="{{ path('app_profile', {id : app.user.id}) }}" class="flex flex-col items-center">
-                <img class="w-[26px] h-[26px] rounded-full border border-[#8D8484]" src="https://placehold.co/26x26" />
+            <a href="{{ path('app_profile', {id : app.user.profile.id}) }}" class="flex flex-col items-center">
+                {% if app.user.profile.image %}
+                    <img class="rounded-full border border-[#8D8484]" src="{{ vich_uploader_asset(app.user.profile.image, 'imageFile') | imagine_filter('petitAvatar') }}" />
+                {% else %}
+                    <img class="rounded-full border border-[#8D8484]" src="{{ asset('images/avatar.jpg') | imagine_filter('petitAvatar') }}" />
+                {% endif %}
                 <div class="w-[46px] flex flex-col items-center gap-1">
                     <div class="text-center text-white text-xs font-normal">Profil</div>
                 </div>
             </a>
         {% endif %}
     </div>
+
 </div>

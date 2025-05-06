@@ -3,13 +3,32 @@
 {% block title %}Hello PostController!{% endblock %}
 
 {% block body %}
-   <div  class="my-8 ">
-       {% for post in posts %}
-           <div class="my-6">
-               <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}" style="border-radius: 15px;" alt="">
-               <a href="" class="bg-transparent w-full py-0px border-none text-[#8D8484]" aria-placeholder="">Ajoute une commentaire...</a>
+    <div class="">
+        {% for post in posts %}
+            <div class="my-6 bg-black text-white p-4 rounded-lg">
+                <div class="flex items-center mb-2">
+                    <img src="{{ vich_uploader_asset(app.user.profile.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                    <div class="text-sm">
+                        <strong>{{ app.user.profile.displayName }}</strong><br>
+                        <p>{{ post.createAt|date('d/m/Y H:i') }}</p>
+                    </div>
+                </div>
 
-           </div>
-       {% endfor %}
-   </div>
+                <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}"
+                     style="border-radius: 15px;" alt="" class="w-full mb-2">
+
+
+                <div class="flex space-x-4 items-center">
+                    <button class="text-yellow-500">👍</button>
+                    <button class="text-white">🤍</button>
+                </div>
+
+                <a href="" class="bg-transparent w-full py-2 border-none text-[#8D8484] mt-2">
+                    Ajoute un commentaire
+                </a>
+
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

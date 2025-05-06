@@ -23,6 +23,9 @@ class Post
     #[ORM\Column(length: 255)]
     private ?string $author = null;
 
+    #[ORM\Column]
+    private ?\DateTime $createAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Post
     public function setAuthor(string $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTime
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(\DateTime $createAt): static
+    {
+        $this->createAt = $createAt;
 
         return $this;
     }
