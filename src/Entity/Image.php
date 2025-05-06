@@ -9,7 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
-class Image
+class Image implements \Serializable
 {
     #[ORM\Id]
     #[ORM\Column]
@@ -124,6 +124,28 @@ class Image
         $this->profile = $profile;
 
         return $this;
+    }
+
+    public function serialize()
+    {
+        // TODO: Implement serialize() method.
+    }
+
+    public function unserialize(string $data)
+    {
+        // TODO: Implement unserialize() method.
+    }
+
+    public function __serialize(): array
+    {
+        return [];
+
+        // TODO: Implement __serialize() method.
+    }
+
+    public function __unserialize(array $data): void
+    {
+        // TODO: Implement __unserialize() method.
     }
 
 

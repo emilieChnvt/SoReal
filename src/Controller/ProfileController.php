@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Profile;
 use App\Form\ProfileForm;
+use App\Form\UserImageForm;
 use App\Repository\ProfileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +36,7 @@ final class ProfileController extends AbstractController
             $profile->setOfUser($this->getUser());
             $entityManager->persist($profile);
             $entityManager->flush();
+            return $this->redirectToRoute('app_profile', ['id' => $profile->getId()]);
 
         }
 
@@ -41,5 +44,26 @@ final class ProfileController extends AbstractController
             'profile'=>$profile,
             'form'=>$profileForm->createView(),
         ]);
+    }
+
+    #[Route('/profile/addImage/{id}', name: 'app_profile_add_image')]
+    public function addImage(Profile $profile, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        $image = new Image();
+        $imageForm = $this->createForm(UserImageForm::class, $image);
+        $imageForm->handleRequest($request);
+        if($imageForm->isSubmitted() && $imageForm->isValid()){
+            $image->setProfile($profile);
+            $entityManager->persist($image);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_profile_edit', ['id' => $profile->getId()]);
+        }
+        return $this->render('profile/addImageProfile.html.twig', [
+            'imageForm'=>$imageForm->createView(),
+        ]);
+
     }
 }
