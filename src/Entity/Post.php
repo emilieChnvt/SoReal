@@ -36,9 +36,16 @@ class Post
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post', orphanRemoval: true)]
     private Collection $comments;
 
+    /**
+     * @var Collection<int, Reaction>
+     */
+    #[ORM\OneToMany(targetEntity: Reaction::class, mappedBy: 'post', orphanRemoval: true)]
+    private Collection $reactions;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->reactions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,5 +131,45 @@ class Post
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Reaction>
+     */
+    public function getReactions(): Collection
+    {
+        return $this->reactions;
+    }
+
+    public function addReaction(Reaction $reaction): static
+    {
+        if (!$this->reactions->contains($reaction)) {
+            $this->reactions->add($reaction);
+            $reaction->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReaction(Reaction $reaction): static
+    {
+        if ($this->reactions->removeElement($reaction)) {
+            // set the owning side to null (unless already changed)
+            if ($reaction->getPost() === $this) {
+                $reaction->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function hasReactionFrom(User $user): bool
+    {
+        foreach ($this->reactions as $reaction) {
+            if ($reaction->getAuthor() === $user) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -43,10 +43,17 @@ class Profile
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $comments;
 
+    /**
+     * @var Collection<int, Reaction>
+     */
+    #[ORM\OneToMany(targetEntity: Reaction::class, mappedBy: 'author')]
+    private Collection $reactions;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->reactions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +163,36 @@ class Profile
             // set the owning side to null (unless already changed)
             if ($comment->getAuthor() === $this) {
                 $comment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reaction>
+     */
+    public function getReactions(): Collection
+    {
+        return $this->reactions;
+    }
+
+    public function addReaction(Reaction $reaction): static
+    {
+        if (!$this->reactions->contains($reaction)) {
+            $this->reactions->add($reaction);
+            $reaction->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReaction(Reaction $reaction): static
+    {
+        if ($this->reactions->removeElement($reaction)) {
+            // set the owning side to null (unless already changed)
+            if ($reaction->getAuthor() === $this) {
+                $reaction->setAuthor(null);
             }
         }
 
