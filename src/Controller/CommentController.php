@@ -21,7 +21,7 @@ final class CommentController extends AbstractController
         ]);
     }
 
-    #[Route('/comment/{id}', name: 'app_comment_create')]
+    #[Route('/comment/create/{id}', name: 'app_comment_create')]
     public function create(EntityManagerInterface $manager, Request $request, Post $post): Response
     {
         if(!$this->getUser()){
@@ -43,7 +43,8 @@ final class CommentController extends AbstractController
     #[Route('/comment/edit/{id}', name: 'app_comment_edit')]
     public function edit(Comment $comment, Request $request, EntityManagerInterface $manager): Response
     {
-        if(!$this->getUser()){
+
+        if(!$this->getUser() || $this->getUser()->getProfile()->getId() !== $comment->getAuthor()->getId()){
             return $this->redirectToRoute('app_login');
         }
         if($comment)
@@ -62,5 +63,21 @@ final class CommentController extends AbstractController
             ]);
         }
 
+    }
+
+
+    #[Route('/comment/delete/{id}', name: 'app_comment_delete')]
+    public function delete(Comment $comment, EntityManagerInterface $manager): Response
+    {
+        if(!$this->getUser() || $this->getUser()->getProfile()->getId() !== $comment->getAuthor()->getId()){
+            return $this->redirectToRoute('app_login');
+        }
+        if($comment)
+        {
+            $manager->remove($comment);
+            $manager->flush();
+
+        }
+        return $this->redirectToRoute('app_post_show', ['id' => $comment->getPost()->getId()]);
     }
 }

@@ -73,8 +73,9 @@
                         </div>
                     </div>
                     {% if app.user.profile.id == comment.author.id %}
-                        <div class="">
+                        <div class="flex items-center justify-between gap-2px">
                             <a href="{{ path('app_comment_edit', {id : comment.id}) }}">{{ ux_icon('ic:baseline-edit', { class: 'w-[15px] h-[15px] text-white'}) }}</a>
+                            <a href="{{ path('app_comment_delete', {id : comment.id}) }}">{{ ux_icon('mynaui:trash', { class: 'w-[15px] h-[15px] text-white' }) }}</a>
                         </div>
 
                     {% endif %}
