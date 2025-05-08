@@ -1,0 +1,20 @@
+{% block javascripts %}
+    <script type="module">
+        import '{{ asset('reaction.js') }}';
+    </script>
+{% endblock %}
+
+<div class="flex space-x-4 items-center">
+    <a href="{{ path('reaction', {id: post.id, type: 'like'}) }}"
+       class="reaction px-2 py-1 rounded-full {% if post.hasReactionFrom(app.user.profile, 'like') %}bg-white text-black{% else %}bg-transparent text-gray-400{% endif %}" data-type="like">
+        👍 <span class="count" data-type="like">{{ post.reactions|filter(r => r.type == 'like')|length }}</span>
+    </a>
+
+    <a href="{{ path('reaction', {id: post.id, type: 'love'}) }}"
+       class="reaction px-2 py-1 rounded-full {% if post.hasReactionFrom(app.user.profile, 'love') %}bg-white text-black{% else %}bg-transparent text-gray-400{% endif %}" data-type="love">
+        ❤️ <span class="count" data-type="love">{{ post.reactions|filter(r => r.type == 'love')|length }}</span>
+    </a>
+</div>
+
+
+

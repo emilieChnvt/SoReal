@@ -8,7 +8,7 @@
                         <a href="{{ path('app_posts') }}">{{ ux_icon('fluent:ios-arrow-24-filled', { class: 'w-[20px] h-[20px]' }) }}</a>
                     </div>
                     {% if post.author.image %}
-                        <img src="{{ vich_uploader_asset(post.author.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                        <img src="{{ vich_uploader_asset(post.author.image, 'imageFile') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
                     {% endif %}
                     <div class="text-sm">
                         <strong>{{ post.author.displayName }}</strong><br>
@@ -63,9 +63,12 @@
             {% for comment in post.comments %}
                 <div class="flex justify-between items-center border-top my-2 p-2 ">
                     <div class="flex items-center ">
-                        {% if post.author.image %}
-                            <img src="{{ vich_uploader_asset(app.user.profile.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                        {% if comment.author.image %}
+                            <img src="{{ vich_uploader_asset(comment.author.image, 'imageFile') | imagine_filter('profilePage') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                        {% else %}
+                            <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
                         {% endif %}
+
                         <div class="flex flex-col p-0">
                             <p class="text-white text-xs">{{ comment.author.displayname }}</p>
                             <p class="text-white">{{ comment.content }}</p>

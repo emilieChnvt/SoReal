@@ -22,12 +22,12 @@ final class ReactionController extends AbstractController
         $profile = $this->getUser()->getProfile();
         $isLiked = false;
 
-        if($post->hasReactionFrom($profile)){
-            $reaction = $reactionRepository->findOneBy(['author' => $profile, 'post' => $post, 'type' => $type]);
+        $reaction = $reactionRepository->findOneBy(['author' => $profile, 'post' => $post, 'type' => $type]);
 
-                $entityManager->remove($reaction);
-        }
-        else{
+
+        if($reaction){
+            $entityManager->remove($reaction);
+        } else{
             $reaction = new Reaction();
             $reaction->setPost($post);
             $reaction->setAuthor($profile);
@@ -40,8 +40,10 @@ final class ReactionController extends AbstractController
 
         return $this->json([
             'isLiked' => $isLiked,
-
+            'likeCount' => $reactionRepository->count(['post' => $post, 'type' => 'like']),
+            'loveCount' => $reactionRepository->count(['post' => $post, 'type' => 'love']),
         ]);
+
 
 
     }

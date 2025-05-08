@@ -29,10 +29,7 @@
                 </div>
 
 
-                <div class="flex space-x-4 items-center">
-                    <a href="{{ path('reaction', {id : post.id, type: 'like'}) }}" class="text-yellow-500">👍</a>
-                    <a href="{{ path('reaction', {id : post.id, type: 'love'}) }}" class="text-white">🤍</a>
-                </div>
+                {% include 'reaction/reactions.html.twig' %}
 
                 <a href="{{ path('app_post_show', {id : post.id}) }}" class="bg-transparent w-full py-2 border-none text-[#8D8484] mt-2">
                     Ajoute un commentaire

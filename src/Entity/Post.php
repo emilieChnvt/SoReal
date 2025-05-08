@@ -163,13 +163,15 @@ class Post
         return $this;
     }
 
-    public function hasReactionFrom( Profile $profile): bool
+
+    public function hasReactionFrom(Profile $profile, string $type): bool
     {
         foreach ($this->reactions as $reaction) {
-            if ($reaction->getAuthor() === $profile) {
+            if ($reaction->getAuthor() === $profile && $reaction->getType() === $type) {
                 return true;
             }
         }
         return false;
     }
+
 }
