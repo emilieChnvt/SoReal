@@ -163,10 +163,10 @@ class Post
         return $this;
     }
 
-    public function hasReactionFrom(User $user): bool
+    public function hasReactionFrom( Profile $profile): bool
     {
         foreach ($this->reactions as $reaction) {
-            if ($reaction->getAuthor() === $user) {
+            if ($reaction->getAuthor() === $profile) {
                 return true;
             }
         }

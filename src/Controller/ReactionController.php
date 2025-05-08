@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\Entity\Reaction;
+use App\Repository\ReactionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,12 +13,35 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ReactionController extends AbstractController
 {
-    public function toggleReaction(EntityManagerInterface $entityManager, Request $request, ): Response
+    #[Route('/post/reaction/{id}/{type}', name: 'reaction')]
+    public function toggleReaction(EntityManagerInterface $entityManager, ReactionRepository $reactionRepository, Post $post, string $type): Response
     {
         if(!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
-        $user = $this->getUser();
+        $profile = $this->getUser()->getProfile();
+        $isLiked = false;
+
+        if($post->hasReactionFrom($profile)){
+            $reaction = $reactionRepository->findOneBy(['author' => $profile, 'post' => $post, 'type' => $type]);
+
+                $entityManager->remove($reaction);
+        }
+        else{
+            $reaction = new Reaction();
+            $reaction->setPost($post);
+            $reaction->setAuthor($profile);
+            $reaction->setType($type);
+            $entityManager->persist($reaction);
+            $isLiked = true;
+
+        }
+        $entityManager->flush();
+
+        return $this->json([
+            'isLiked' => $isLiked,
+
+        ]);
 
 
     }
