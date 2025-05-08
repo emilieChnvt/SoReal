@@ -39,4 +39,28 @@ final class CommentController extends AbstractController
         return $this->redirectToRoute('app_post_show', ['id' => $comment->getPost()->getId()]);
 
     }
+
+    #[Route('/comment/edit/{id}', name: 'app_comment_edit')]
+    public function edit(Comment $comment, Request $request, EntityManagerInterface $manager): Response
+    {
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+        if($comment)
+        {
+            $commentForm = $this->createForm(CommentForm::class , $comment);
+            $commentForm->handleRequest($request);
+            if($commentForm->isSubmitted() && $commentForm->isValid()){
+                $manager->persist($comment);
+                $manager->flush();
+                return $this->redirectToRoute('app_post_show', ['id' => $comment->getPost()->getId()]);
+
+            }
+            return $this->render('comment/edit.html.twig', [
+                'comment' => $comment,
+                'commentForm' => $commentForm
+            ]);
+        }
+
+    }
 }

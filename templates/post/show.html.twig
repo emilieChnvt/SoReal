@@ -31,23 +31,29 @@
                     <button class="text-white">🤍</button>
                 </div>
 
-                <div class="">
-                    {{ form_start(commentForm, {"action": path('app_comment_create', {id:post.id}) }) }}
-
-                    {{ form_row(commentForm.content, {
-                        'label': false,
-                        'attr': {
-                            'placeholder': 'Écris ton commentaire...',
-                            'class': 'w-full bg-transparent  border-none  py-2 text-sm '
-                        }
+                <div class="flex flex-col">
+                    {{ form_start(commentForm, {
+                        "action": path('app_comment_create', {id: post.id})
                     }) }}
 
-                    <button type="submit" class="w-full py-2 border-none text-[#8D8484] mt-2">
-                        Ajoute un commentaire
-                    </button>
+                    <div class="flex w-full items-center justify-between gap-2">
+                        {{ form_widget(commentForm.content, {
+                            'attr': {
+                                'placeholder': 'Écris ton commentaire...',
+                                'class': 'flex-1 bg-transparent border-none py-2 text-sm'
+                            }
+                        }) }}
+
+                        <button type="submit" class="border-none text-[#8D8484] flex-shrink-0">
+                            {{ ux_icon('raphael:arrowalt', { class: 'text-white w-[15px] h-[15px]' }) }}
+                        </button>
+                    </div>
 
                     {{ form_end(commentForm) }}
+
+
                 </div>
+
 
 
 
@@ -55,15 +61,23 @@
         <div class="flex flex-col">
             <h2 class="text-white font-semibold">Commentaires</h2>
             {% for comment in post.comments %}
-                <div class="flex items-center  border-y my-2 p-2 ">
-                    {% if post.author.image %}
-                        <img src="{{ vich_uploader_asset(app.user.profile.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
-                    {% endif %}
-                    <div class="flex flex-col p-0">
-                        <p class="text-white text-xs">{{ comment.author.displayname }}</p>
-                        <p class="text-white">{{ comment.content }}</p>
+                <div class="flex justify-between items-center border-top my-2 p-2 ">
+                    <div class="flex items-center ">
+                        {% if post.author.image %}
+                            <img src="{{ vich_uploader_asset(app.user.profile.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                        {% endif %}
+                        <div class="flex flex-col p-0">
+                            <p class="text-white text-xs">{{ comment.author.displayname }}</p>
+                            <p class="text-white">{{ comment.content }}</p>
 
+                        </div>
                     </div>
+                    {% if app.user.profile.id == comment.author.id %}
+                        <div class="">
+                            <a href="{{ path('app_comment_edit', {id : comment.id}) }}">{{ ux_icon('ic:baseline-edit', { class: 'w-[15px] h-[15px] text-white'}) }}</a>
+                        </div>
+
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
