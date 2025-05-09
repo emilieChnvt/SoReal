@@ -10,6 +10,8 @@
 
                     {% if post.author.image %}
                         <img src="{{ vich_uploader_asset(post.author.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                        {% else %}
+                            <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
                     {% endif %}
                     <div class="text-sm">
                         <strong>{{ post.author.displayName }}</strong><br>
@@ -22,15 +24,17 @@
                 <div class="relative">
                     <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}"
                          style="border-radius: 15px;" alt="" class="w-full mb-2">
-                    {% if app.user.profile.ofUser == post.author %}
-                    <span class="absolute bottom-2 right-2  p-2 border-1 rounded-full " >{{ ux_icon('mynaui:trash', { class: 'w-[15px] h-[15px]' }) }}</span>
-
+                    {% if app.user.profile.ofUser == post.author.ofUser %}
+                        <a href="{{ path('app_post_delete', {id: post.id}) }}" class="absolute bottom-2 right-2 p-2 border-1 rounded-full">
+                            {{ ux_icon('mynaui:trash', { class: 'w-[15px] h-[15px]' }) }}
+                        </a>
                     {% endif %}
+
                 </div>
 
 
                 {% include 'reaction/reactions.html.twig' %}
-
+                <p>{{ post.content }}</p>
                 <a href="{{ path('app_post_show', {id : post.id}) }}" class="bg-transparent w-full py-2 border-none text-[#8D8484] mt-2">
                     Ajoute un commentaire
                 </a>

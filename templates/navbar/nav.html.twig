@@ -1,4 +1,4 @@
-<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full h-[7%] py-2 bg-[#3A3737] rounded-t-2xl flex justify-center items-center gap-[44px]">
+<div class="fixed z-10   bottom-0 left-1/2 -translate-x-1/2 w-full h-[7%] py-2 bg-[#3A3737] rounded-t-2xl flex justify-center items-center gap-[44px]">
     <div class="w-[46px]  gap-1">
         <a href="{{ path('app_posts') }}" class="flex flex-col items-center">
             <div class="w-[27px] h-[22px] text-[#8D8484]">
@@ -33,7 +33,8 @@
                 {% if app.user.profile.image %}
                     <img class="rounded-full border border-[#8D8484]" src="{{ vich_uploader_asset(app.user.profile.image, 'imageFile') | imagine_filter('petitAvatar') }}" />
                 {% else %}
-                    <img class="rounded-full border border-[#8D8484]" src="{{ asset('images/avatar.jpg') | imagine_filter('petitAvatar') }}" />
+                    <img class="rounded-full border border-[#8D8484]"
+                         src="{{ asset('images/avatar.jpg') | imagine_filter('petitAvatar') }}" />
                 {% endif %}
                 <div class="w-[46px] flex flex-col items-center gap-1">
                     <div class="text-center text-white text-xs font-normal">Profil</div>

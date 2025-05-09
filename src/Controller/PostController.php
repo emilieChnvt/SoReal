@@ -73,6 +73,7 @@ final class PostController extends AbstractController
         $post = new Post();
         $form = $this->createForm(PostForm::class, $post);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setCreateAt(new \DateTime());
             $post->setAuthor($this->getUser()->getProfile());
@@ -86,7 +87,28 @@ final class PostController extends AbstractController
             'image' => $image,
 
         ]);
-
-
     }
+
+    #[Route('/post/delete/{id}', name: 'app_post_delete')]
+    public function delete(Post $post, EntityManagerInterface $manager): Response
+    {
+        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) || $post->getAuthor()->getId() != $this->getUser()->getProfile()->getId()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        if (!$post) {
+            return $this->redirectToRoute('app_posts');
+        }
+
+        $image = $post->getImage();
+        if ($image) {
+            $manager->remove($image);
+        }
+
+        $manager->remove($post);
+        $manager->flush();
+
+        return $this->redirectToRoute('app_posts');
+    }
+
 }
