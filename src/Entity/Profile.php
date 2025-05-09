@@ -49,11 +49,25 @@ class Profile
     #[ORM\OneToMany(targetEntity: Reaction::class, mappedBy: 'author')]
     private Collection $reactions;
 
+    /**
+     * @var Collection<int, Friendship>
+     */
+    #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'personA')]
+    private Collection $friendAsPersonA;
+
+    /**
+     * @var Collection<int, Friendship>
+     */
+    #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'personB', orphanRemoval: true)]
+    private Collection $friendAsPersonB;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->reactions = new ArrayCollection();
+        $this->friendAsPersonA = new ArrayCollection();
+        $this->friendAsPersonB = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,6 +207,66 @@ class Profile
             // set the owning side to null (unless already changed)
             if ($reaction->getAuthor() === $this) {
                 $reaction->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Friendship>
+     */
+    public function getFriendAsPersonA(): Collection
+    {
+        return $this->friendAsPersonA;
+    }
+
+    public function addFriendAsPersonA(Friendship $friendAsPersonA): static
+    {
+        if (!$this->friendAsPersonA->contains($friendAsPersonA)) {
+            $this->friendAsPersonA->add($friendAsPersonA);
+            $friendAsPersonA->setPersonA($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFriendAsPersonA(Friendship $friendAsPersonA): static
+    {
+        if ($this->friendAsPersonA->removeElement($friendAsPersonA)) {
+            // set the owning side to null (unless already changed)
+            if ($friendAsPersonA->getPersonA() === $this) {
+                $friendAsPersonA->setPersonA(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Friendship>
+     */
+    public function getFriendAsPersonB(): Collection
+    {
+        return $this->friendAsPersonB;
+    }
+
+    public function addFriendAsPersonB(Friendship $friendAsPersonB): static
+    {
+        if (!$this->friendAsPersonB->contains($friendAsPersonB)) {
+            $this->friendAsPersonB->add($friendAsPersonB);
+            $friendAsPersonB->setPersonB($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFriendAsPersonB(Friendship $friendAsPersonB): static
+    {
+        if ($this->friendAsPersonB->removeElement($friendAsPersonB)) {
+            // set the owning side to null (unless already changed)
+            if ($friendAsPersonB->getPersonB() === $this) {
+                $friendAsPersonB->setPersonB(null);
             }
         }
 
