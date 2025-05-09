@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PostController!{% endblock %}
-
+{% block title %}Hello ! {{ app.user.profile.displayName }}{% endblock %}
+{% block javascripts %}
+    <script type="module">
+        import '{{ asset('share.js') }}';
+    </script>
+{% endblock %}
 {% block body %}
     <div class="">
         {% for post in posts %}
@@ -46,7 +50,7 @@
                         data-title="Post de {{ post.author.displayName }}"
                         data-url="{{ path('app_post_show', {id : post.id}) }}"
                 >
-                    Partager ce post
+                    {{ ux_icon('lucide:share', { class: 'w-[15px] h-[15px] text-white' }) }}
                 </button>
             </p>
             <p class="result"></p>
@@ -54,25 +58,6 @@
 
         {% endfor %}
     </div>
-    <script>
-        document.querySelectorAll(".share-button").forEach((btn) => {
-            btn.addEventListener("click", async () => {
-                const shareData = {
-                    title: btn.dataset.title,
-                    text: btn.dataset.text,
-                    url: btn.dataset.url
-                };
 
-                const resultPara = btn.closest("div").querySelector(".result");
-
-                try {
-                    await navigator.share(shareData);
-                    if (resultPara) resultPara.textContent = "Partagé avec succès !";
-                } catch (err) {
-                    if (resultPara) resultPara.textContent = `Erreur : ${err}`;
-                }
-            });
-        });
-    </script>
 
 {% endblock %}
