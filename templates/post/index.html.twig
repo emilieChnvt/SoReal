@@ -29,31 +29,36 @@
                     <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}"
                          style="border-radius: 15px;" alt="" class="w-full mb-2">
                     {% if app.user.profile.ofUser == post.author.ofUser %}
-                        <a href="{{ path('app_post_delete', {id: post.id}) }}" class="absolute bottom-2 right-2 p-2 border-1 rounded-full">
-                            {{ ux_icon('mynaui:trash', { class: 'w-[15px] h-[15px]' }) }}
+                        <a href="{{ path('app_post_delete', {id: post.id}) }}" class="absolute bottom-2 right-2 border border-black p-2 border-1 bg-white text-black rounded-full">
+                            {{ ux_icon('mynaui:trash', { class: 'w-[15px] h-[15px]'  }) }}
                         </a>
                     {% endif %}
 
                 </div>
 
 
-                {% include 'reaction/reactions.html.twig' %}
+                <div class="flex justify-between">
+                    {% include 'reaction/reactions.html.twig' %}
+                    {% if app.user.profile.ofUser == post.author.ofUser %}
+                    <button
+                            class="share-button rounded-full "
+                            data-title="Post de {{ post.author.displayName }}"
+                            data-url="{{ path('app_post_show', {id : post.id}) }}"
+                    >
+                        {{ ux_icon('lucide:share', { class: 'w-[15px] h-[15px] text-white' }) }}
+                    </button>
+                    {% endif %}
+                </div>
                 <p>{{ post.content }}</p>
                 <a href="{{ path('app_post_show', {id : post.id}) }}" class="bg-transparent w-full py-2 border-none text-[#8D8484] mt-2">
                     Ajoute un commentaire
                 </a>
 
             </div>
-            <p>
-                <button
-                        class="share-button"
-                        data-title="Post de {{ post.author.displayName }}"
-                        data-url="{{ path('app_post_show', {id : post.id}) }}"
-                >
-                    {{ ux_icon('lucide:share', { class: 'w-[15px] h-[15px] text-white' }) }}
-                </button>
-            </p>
-            <p class="result"></p>
+
+
+
+
 
 
         {% endfor %}
