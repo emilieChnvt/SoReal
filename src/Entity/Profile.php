@@ -61,6 +61,18 @@ class Profile
     #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'personB', orphanRemoval: true)]
     private Collection $friendAsPersonB;
 
+    /**
+     * @var Collection<int, FriendshipRequest>
+     */
+    #[ORM\OneToMany(targetEntity: FriendshipRequest::class, mappedBy: 'sender', orphanRemoval: true)]
+    private Collection $sentFriendRequest;
+
+    /**
+     * @var Collection<int, FriendshipRequest>
+     */
+    #[ORM\OneToMany(targetEntity: FriendshipRequest::class, mappedBy: 'receiver', orphanRemoval: true)]
+    private Collection $receiverFriendRequest;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -68,6 +80,8 @@ class Profile
         $this->reactions = new ArrayCollection();
         $this->friendAsPersonA = new ArrayCollection();
         $this->friendAsPersonB = new ArrayCollection();
+        $this->sentFriendRequest = new ArrayCollection();
+        $this->receiverFriendRequest = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -267,6 +281,81 @@ class Profile
             // set the owning side to null (unless already changed)
             if ($friendAsPersonB->getPersonB() === $this) {
                 $friendAsPersonB->setPersonB(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isFriendWith(Profile $profile):bool
+    {
+        foreach ($this->friendAsPersonB as $friendShip) {
+            if($friendShip->getPersonA() === $profile){
+                return true;
+            }
+        }
+        foreach ($this->friendAsPersonA as $friendShip) {
+            if($friendShip->getPersonB() === $profile){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return Collection<int, FriendshipRequest>
+     */
+    public function getSentFriendRequest(): Collection
+    {
+        return $this->sentFriendRequest;
+    }
+
+    public function addSentFriendRequest(FriendshipRequest $sentFriendRequest): static
+    {
+        if (!$this->sentFriendRequest->contains($sentFriendRequest)) {
+            $this->sentFriendRequest->add($sentFriendRequest);
+            $sentFriendRequest->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSentFriendRequest(FriendshipRequest $sentFriendRequest): static
+    {
+        if ($this->sentFriendRequest->removeElement($sentFriendRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($sentFriendRequest->getSender() === $this) {
+                $sentFriendRequest->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FriendshipRequest>
+     */
+    public function getReceiverFriendRequest(): Collection
+    {
+        return $this->receiverFriendRequest;
+    }
+
+    public function addReceiverFriendRequest(FriendshipRequest $receiverFriendRequest): static
+    {
+        if (!$this->receiverFriendRequest->contains($receiverFriendRequest)) {
+            $this->receiverFriendRequest->add($receiverFriendRequest);
+            $receiverFriendRequest->setReceiver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceiverFriendRequest(FriendshipRequest $receiverFriendRequest): static
+    {
+        if ($this->receiverFriendRequest->removeElement($receiverFriendRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($receiverFriendRequest->getReceiver() === $this) {
+                $receiverFriendRequest->setReceiver(null);
             }
         }
 
