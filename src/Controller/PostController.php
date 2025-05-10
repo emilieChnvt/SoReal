@@ -39,6 +39,25 @@ final class PostController extends AbstractController
         ]);
     }
 
+    #[Route('/post/edit/{id}', name: 'app_post_edit')]
+    public function edit(Post $post, Request $request, EntityManagerInterface $manager, Image $image): Response
+    {
+        $form = $this->createForm(PostForm::class, $post);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $post->setImage($image);
+            $manager->persist($post);
+            $manager->flush();
+            return $this->redirectToRoute('app_post_show', ['id' => $post->getId()]);
+        }
+        return $this->render('post/edit.html.twig', [
+            'form' => $form,
+            'post' => $post,
+            'image' => $image,
+        ]);
+
+    }
+
 
 
     #[Route('/post/addImage', name: 'app_post_addImage')]

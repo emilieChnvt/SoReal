@@ -9,6 +9,10 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [ 370, 360 ], mode: outbound }
+        monBereal:
+            quality: 75
+            filters:
+                thumbnail: { size: [ 110, 100 ], mode: outbound }
         profilePage:
             quality: 75
             filters:

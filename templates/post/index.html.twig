@@ -7,62 +7,74 @@
     </script>
 {% endblock %}
 {% block body %}
-    <div class="">
+    <div class="space-y-6">
+
         {% for post in posts %}
-            <div class="my-6 bg-black text-white p-4 rounded-lg">
-                <div class="flex items-center mb-2">
+            {% if post.author.ofUser == app.user.profile.ofUser %}
+                <div class="flex flex-col items-center justify-center  p-2 rounded-lg  mx-auto">
+                    <div class="relative ">
+                        <a href="{{ path('app_post_show', {id:post.id}) }}">
+                            <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('monBereal') }}"
+                                 alt="Mon post"
+                                 class="w-full rounded">
+                        </a>
 
-                    {% if post.author.image %}
-                        <img src="{{ vich_uploader_asset(post.author.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
-                        {% else %}
-                            <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
-                    {% endif %}
-                    <div class="text-sm">
-                        <strong>{{ post.author.displayName }}</strong><br>
-                        <p>{{ post.createAt|date('d/m/Y H:i') }}</p>
-
-
+                        <a href="{{ path('app_post_delete', { id: post.id }) }}"
+                           class="absolute bottom-2 right-2 border border-black p-2 bg-white text-black rounded-full">
+                            {{ ux_icon('mynaui:trash', { class: 'w-[15px] h-[15px]' }) }}
+                        </a>
                     </div>
-                </div>
 
-                <div class="relative">
-                    <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}"
-                         style="border-radius: 15px;" alt="" class="w-full mb-2">
-                    {% if app.user.profile.ofUser == post.author.ofUser %}
-                        <a href="{{ path('app_post_delete', {id: post.id}) }}" class="absolute bottom-2 right-2 border border-black p-2 border-1 bg-white text-black rounded-full">
-                            {{ ux_icon('mynaui:trash', { class: 'w-[15px] h-[15px]'  }) }}
+                    {% if post.content %}
+                        <a href="{{ path('app_post_edit', { id: post.id }) }}"
+                           class="text-[#8D8484] text-sm mt-2 inline-block">
+                            {{ post.content }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_post_edit', { id: post.id }) }}"
+                           class="text-[#8D8484] text-sm mt-2 inline-block">
+                            Ajouter une légende..
                         </a>
                     {% endif %}
-
                 </div>
+            {% endif %}
+        {% endfor %}
 
+        {% for post in posts %}
+            {% if post.author.ofUser != app.user.profile.ofUser %}
+                <div class="bg-black text-white p-4 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        {% if post.author.image %}
+                            <img src="{{ vich_uploader_asset(post.author.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                        {% else %}
+                            <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                        {% endif %}
+                        <div class="text-sm">
+                            <strong>{{ post.author.displayName }}</strong><br>
+                            <p>{{ post.createAt|date('d/m/Y H:i') }}</p>
+                        </div>
+                    </div>
 
-                <div class="flex justify-between">
-                    {% include 'reaction/reactions.html.twig' %}
-                    {% if app.user.profile.ofUser == post.author.ofUser %}
-                    <button
-                            class="share-button rounded-full "
-                            data-title="Post de {{ post.author.displayName }}"
-                            data-url="{{ path('app_post_show', {id : post.id}) }}"
-                    >
-                        {{ ux_icon('lucide:share', { class: 'w-[15px] h-[15px] text-white' }) }}
-                    </button>
-                    {% endif %}
+                    <div class="relative">
+                        <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}"
+                             alt="" class="w-full rounded mb-2">
+                    </div>
+
+                    <div class="flex justify-between">
+                        {% include 'reaction/reactions.html.twig' %}
+                        <button
+                                class="share-button rounded-full"
+                                data-title="Post de {{ post.author.displayName }}"
+                                data-url="{{ path('app_post_show', {id : post.id}) }}">
+                            {{ ux_icon('lucide:share', { class: 'w-[15px] h-[15px] text-white' }) }}
+                        </button>
+                    </div>
+                    <p>{{ post.content }}</p>
+                    <a href="{{ path('app_post_show', {id : post.id}) }}" class="text-[#8D8484] text-sm mt-2 inline-block">
+                        Ajoute un commentaire
+                    </a>
                 </div>
-                <p>{{ post.content }}</p>
-                <a href="{{ path('app_post_show', {id : post.id}) }}" class="bg-transparent w-full py-2 border-none text-[#8D8484] mt-2">
-                    Ajoute un commentaire
-                </a>
-
-            </div>
-
-
-
-
-
-
+            {% endif %}
         {% endfor %}
     </div>
-
-
 {% endblock %}

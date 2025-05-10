@@ -1,48 +1,91 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h3>the people</h3>
-    {% for profile in profiles %}
+    <div class="p-6  rounded-xl shadow-md max-w-3xl mx-auto mt-6 space-y-10">
 
-        {% if profile != app.user.profile %}
+        <div>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">🔍 Suggestions</h3>
+            <div class="space-y-3">
+                {% for profile in profiles %}
+                    {% if profile != app.user.profile and not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}
+                        <div class="flex items-center justify-between mb-2 border-b-2 border-b-white">
+                            <div class="flex">
+                                {% if profile.image %}
+                                    <img src="{{ vich_uploader_asset(profile.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                                {% else %}
+                                    <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                                {% endif %}
 
-            <p><strong>{{ profile.ofUser.email }}   ---
+                                <div class="text-sm">
+                                    <strong class="text-white">{{ profile.displayName }}</strong><br>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                {% if not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}
+                                    <a href="{{ path('send_friend_request', { id: profile.id }) }}"
+                                       class=" px-2 bg-[#3A3737] text-sm text-white rounded-full hover:bg-green-600">
+                                        Ajouter
+                                    </a>
+                                {% endif %}
+                                <a href="{{ path('app_profile', {id:profile.id}) }}">
+                                    {{ ux_icon('weui:arrow-outlined', {class:'w-[25px] h-[25px] text-white'}) }}
 
-                    {% if not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}
-
-                        <a href="{{ path('send_friend_request', { id:profile.id}) }}" class="btn btn-success">Request friendship</a>
+                                </a>
+                            </div>
+                        </div>
 
                     {% endif %}
-                </strong></p>
+                {% endfor %}
+            </div>
+        </div>
 
-        {% endif %}
+        <div>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">📤 Sent Friend Requests</h3>
+            <ul class="space-y-3">
+                {% for sentRequest in app.user.profile.sentFriendRequest %}
+                    <li class="flex justify-between bg-yellow-50 p-4 rounded gap-x-4">
+                        <span class="text-gray-700">To: <strong>{{ sentRequest.receiver.ofUser.email }}</strong></span>
+                        <span class="text-sm text-yellow-600">⏳ Pending</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 
+        <div>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">📥 Incoming Friend Requests</h3>
+            <ul class="space-y-3">
+                {% for receivedRequest in app.user.profile.receiverFriendRequest %}
+                    <li class="flex justify-between items-center bg-blue-50 p-4 rounded">
+                        <span class="text-gray-700">From: <strong>{{ receivedRequest.sender.ofUser.email }}</strong></span>
+                        <div class="space-x-2">
+                            <a href="{{ path('accept_friend_request', { id: receivedRequest.id }) }}"
+                               class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">
+                                ✅ Accept
+                            </a>
+                            <a href="{{ path('decline_friend_request', { id: receivedRequest.id }) }}"
+                               class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                                ❌ Decline
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 
-    {% endfor %}
+        <!-- My Friends -->
+        <div>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">👥 My Friends</h3>
+            <ul class="space-y-3">
+                {% for friend in app.user.profile.getFriends() %}
+                    <li class="flex justify-between items-center bg-green-50 p-4 rounded">
+                        <span class="text-gray-700">{{ friend.ofUser.email }}</span>
+                        <a href="#" class="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            💬 Chat
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 
-    <h3>My sent friend requests</h3>
-    {% for sentRequest in app.user.profile.sentFriendRequest %}
-
-        <p><strong>asked {{ sentRequest.receiver.ofUser.email }} </strong></p>
-
-    {% endfor %}
-
-    <h3>People requesting my friendship</h3>
-    {% for receivedRequest in app.user.profile.receiverFriendRequest %}
-
-        <p><strong>asked {{ receivedRequest.sender.ofUser.email }} }}
-                <a href="{{ path('accept_friend_request', {id : receivedRequest.id}) }}" class="btn btn-success">Accept</a>
-                <a href="{{ path('decline_friend_request', {id : receivedRequest.id}) }}" class="btn btn-danger">Decline</a>
-            </strong></p>
-
-    {% endfor %}
-
-    <h3>My friends :</h3>
-
-    {% for friend in app.user.profile.getFriends() %}
-
-        <p><strong>{{ friend.ofUser.email }} <a href="" class="btn btn-success">Chat</a></strong></p>
-
-    {% endfor %}
-
+    </div>
 {% endblock %}
