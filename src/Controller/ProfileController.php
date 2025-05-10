@@ -15,8 +15,16 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ProfileController extends AbstractController
 {
+
+    #[Route('/profiles', name: 'profiles')]
+    public function index(ProfileRepository $profileRepository): Response
+    {
+        return $this->render('friends/index.html.twig', [
+            'profiles' => $profileRepository->findAll(),
+        ]);
+    }
     #[Route('/profile/{id}', name: 'app_profile')]
-    public function index(Profile $profile): Response
+    public function show(Profile $profile): Response
     {
         return $this->render('profile/index.html.twig', [
             'profile'=>$profile,

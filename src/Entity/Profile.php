@@ -361,4 +361,19 @@ class Profile
 
         return $this;
     }
+
+    public function isPendingSendRequest(Profile $profile): bool
+    {
+        foreach($this->receiverFriendRequest as $friendRequest){
+            if($friendRequest->getSender() === $profile){}
+                return true;
+        }
+
+        foreach($this->sentFriendRequest as $friendRequest){
+            if($friendRequest->getReceiver() === $profile){
+                return true;
+            }
+        }
+        return false;
+    }
 }
