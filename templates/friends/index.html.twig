@@ -1,37 +1,48 @@
-<h3>the people</h3>
-{% for profile in profiles %}
+{% extends 'base.html.twig' %}
 
-    {% if profile != app.user.profile %}
+{% block body %}
+    <h3>the people</h3>
+    {% for profile in profiles %}
 
-        <p><strong>{{ profile.ofUser.email }}   ---
+        {% if profile != app.user.profile %}
 
-                {% if not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}
+            <p><strong>{{ profile.ofUser.email }}   ---
 
-                    <a href="{{ path('send_friend_request', { id:profile.id}) }}" class="btn btn-success">Request friendship</a>
+                    {% if not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}
 
-                {% endif %}
+                        <a href="{{ path('send_friend_request', { id:profile.id}) }}" class="btn btn-success">Request friendship</a>
+
+                    {% endif %}
+                </strong></p>
+
+        {% endif %}
+
+
+    {% endfor %}
+
+    <h3>My sent friend requests</h3>
+    {% for sentRequest in app.user.profile.sentFriendRequest %}
+
+        <p><strong>asked {{ sentRequest.receiver.ofUser.email }} </strong></p>
+
+    {% endfor %}
+
+    <h3>People requesting my friendship</h3>
+    {% for receivedRequest in app.user.profile.receiverFriendRequest %}
+
+        <p><strong>asked {{ receivedRequest.sender.ofUser.email }} }}
+                <a href="{{ path('accept_friend_request', {id : receivedRequest.id}) }}" class="btn btn-success">Accept</a>
+                <a href="{{ path('decline_friend_request', {id : receivedRequest.id}) }}" class="btn btn-danger">Decline</a>
             </strong></p>
 
-    {% endif %}
+    {% endfor %}
 
+    <h3>My friends :</h3>
 
-{% endfor %}
+    {% for friend in app.user.profile.getFriends() %}
 
-<h3>My sent friend requests</h3>
-{% for sentRequest in app.user.profile.sentFriendRequest %}
+        <p><strong>{{ friend.ofUser.email }} <a href="" class="btn btn-success">Chat</a></strong></p>
 
-    <p><strong>asked {{ sentRequest.receiver.ofUser.email }} </strong></p>
+    {% endfor %}
 
-{% endfor %}
-
-<h3>People requesting my friendship</h3>
-{% for receivedRequest in app.user.profile.receiverFriendRequest %}
-
-    <p><strong>asked {{ receivedRequest.sender.ofUser.email }} }}
-            <a href="" class="btn btn-success">Accept</a>
-            <a href="" class="btn btn-danger">Decline</a>
-        </strong></p>
-
-{% endfor %}
-
-<h3>My friends :</h3>
+{% endblock %}

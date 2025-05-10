@@ -376,4 +376,16 @@ class Profile
         }
         return false;
     }
+
+    public function getFriends():array
+    {
+        $friends = [];
+        foreach ($this->friendAsPersonB as $friendShip) {
+            $friends[] = $friendShip->getPersonA();
+        }
+        foreach ($this->friendAsPersonA as $friendShip) {
+            $friends[] = $friendShip->getPersonB();
+        }
+        return $friends;
+    }
 }
