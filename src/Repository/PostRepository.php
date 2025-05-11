@@ -18,8 +18,8 @@ class PostRepository extends ServiceEntityRepository
 
     public function countPostsByProfile(): array
     {
-        return $this->createQueryBuilder('p')
-            ->select('profile.displayName AS displayName', 'COUNT(p.id) AS post_count')
+        return $this->createQueryBuilder('p') //crée requête
+            ->select('profile.displayName AS displayName')
             ->join('p.author', 'profile')
             ->groupBy('profile.id')
             ->orderBy('post_count', 'DESC')
@@ -27,19 +27,6 @@ class PostRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @return Post[] Returns an array of Post objects
-     */
-    public function findByFriends($profile): array
-    {
-        return $this->createQueryBuilder('p')
-            ->innerJoin('p.author', 'a')  //  jointure avec l'auteur du post
-            ->where('a IN (:friends)')  // auteur du post, un ami de l'utilisateur
-            ->setParameter('friends', $profile->getFriends())  // passe la liste des amis
-            ->orderBy('p.createAt', 'DESC')  // Tri par date de création
-            ->getQuery()
-            ->getResult();
-    }
 
 
 

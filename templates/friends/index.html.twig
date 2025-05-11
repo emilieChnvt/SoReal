@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="p-6  rounded-xl shadow-md max-w-3xl mx-auto mt-6 space-y-10">
+    <div class="p-6  rounded-xl  max-w-3xl mx-auto mt-6 space-y-10">
 
 
         <div>
@@ -49,7 +49,7 @@
             <h3 class="text-xl font-bold text-[#8D8484] mb-4">📤 Sent Friend Requests</h3>
             <ul class="space-y-3">
                 {% for sentRequest in app.user.profile.sentFriendRequest %}
-                    <li class="flex justify-between bg-yellow-50 p-4 rounded gap-x-4">
+                    <li class="flex justify-between  p-4 rounded gap-x-4">
                         <span class="text-[#8D8484]">To: <strong>{{ sentRequest.receiver.ofUser.email }}</strong></span>
                         <span class="text-sm text-yellow-600">⏳ Pending</span>
                     </li>
@@ -65,11 +65,11 @@
                         <span class="text-[#8D8484]">From: <strong>{{ receivedRequest.sender.ofUser.email }}</strong></span>
                         <div class="space-x-2">
                             <a href="{{ path('accept_friend_request', { id: receivedRequest.id }) }}"
-                               class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">
+                               class="px-3 py-1 bg-green-500 text-white rounded ">
                                 ✅ Accept
                             </a>
                             <a href="{{ path('decline_friend_request', { id: receivedRequest.id }) }}"
-                               class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                               class="px-3 py-1 bg-red-500 text-white rounded ">
                                 ❌ Decline
                             </a>
                         </div>
@@ -84,7 +84,7 @@
                 {% for friend in app.user.profile.getFriends() %}
                     <li class="flex justify-between items-center bg-green-50 p-4 rounded">
                         <span class="text-[#8D8484]">{{ friend.ofUser.email }}</span>
-                        <a href="{{ path('app_chat_initiate', {id:friend.id}) }}" class="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        <a href="{{ path('app_chat_initiate', {id:friend.id}) }}" class="px-4 py-1  text-white rounded ">
                             💬 Chat
                         </a>
                     </li>
