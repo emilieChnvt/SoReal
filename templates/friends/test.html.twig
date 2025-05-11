@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.displayName
+    ) }}
+    <button type="submit" class="mt-4 bg-green-600 text-white px-4 py-2 rounded">
+        Rechercher
+    </button>
+    {{ form_end(form) }}
+
+{% endblock %}
+

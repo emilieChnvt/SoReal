@@ -74,4 +74,23 @@ return [
     '@symfony/ux-chartjs' => [
         'version' => '2.24.0',
     ],
+    'chartjs-plugin-zoom' => [
+        'version' => '2.2.0',
+    ],
+    'hammerjs' => [
+        'version' => '2.0.8',
+    ],
+    'chart.js/helpers' => [
+        'version' => '4.4.9',
+    ],
+    'tailwindcss' => [
+        'version' => '4.1.6',
+    ],
+    'tailwindcss/index.min.css' => [
+        'version' => '4.1.6',
+        'type' => 'css',
+    ],
+    '@symfony/ux-autocomplete' => [
+        'version' => '2.24.0',
+    ],
 ];

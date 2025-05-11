@@ -47,6 +47,7 @@ final class AdminController extends AbstractController
         ]);
     }
 
+
     #[Route('promote/{id}', name: 'app_promote')]
     public function promote(User $user, EntityManagerInterface $entityManager): Response
     {
