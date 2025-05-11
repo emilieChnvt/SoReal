@@ -78,7 +78,7 @@
                 {% for friend in app.user.profile.getFriends() %}
                     <li class="flex justify-between items-center bg-green-50 p-4 rounded">
                         <span class="text-[#8D8484]">{{ friend.ofUser.email }}</span>
-                        <a href="#" class="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        <a href="{{ path('app_chat_initiate', {id:friend.id}) }}" class="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
                             💬 Chat
                         </a>
                     </li>
