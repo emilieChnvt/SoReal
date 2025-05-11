@@ -4,7 +4,7 @@
     <div class="p-6  rounded-xl shadow-md max-w-3xl mx-auto mt-6 space-y-10">
 
         <div>
-            <h3 class="text-xl font-bold text-gray-800 mb-4">🔍 Suggestions</h3>
+            <h3 class="text-xl font-bold text-[#8D8484] mb-4">🔍 Suggestions</h3>
             <div class="space-y-3">
                 {% for profile in profiles %}
                     {% if profile != app.user.profile and not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}
@@ -23,7 +23,7 @@
                             <div class="flex items-center">
                                 {% if not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}
                                     <a href="{{ path('send_friend_request', { id: profile.id }) }}"
-                                       class=" px-2 bg-[#3A3737] text-sm text-white rounded-full hover:bg-green-600">
+                                       class=" px-2 bg-[#8D8484] text-sm text-white rounded-full hover:bg-green-600">
                                         Ajouter
                                     </a>
                                 {% endif %}
@@ -40,11 +40,11 @@
         </div>
 
         <div>
-            <h3 class="text-xl font-bold text-gray-800 mb-4">📤 Sent Friend Requests</h3>
+            <h3 class="text-xl font-bold text-[#8D8484] mb-4">📤 Sent Friend Requests</h3>
             <ul class="space-y-3">
                 {% for sentRequest in app.user.profile.sentFriendRequest %}
                     <li class="flex justify-between bg-yellow-50 p-4 rounded gap-x-4">
-                        <span class="text-gray-700">To: <strong>{{ sentRequest.receiver.ofUser.email }}</strong></span>
+                        <span class="text-[#8D8484]">To: <strong>{{ sentRequest.receiver.ofUser.email }}</strong></span>
                         <span class="text-sm text-yellow-600">⏳ Pending</span>
                     </li>
                 {% endfor %}
@@ -52,11 +52,11 @@
         </div>
 
         <div>
-            <h3 class="text-xl font-bold text-gray-800 mb-4">📥 Incoming Friend Requests</h3>
+            <h3 class="text-xl font-bold text-[#8D8484] mb-4">📥 Incoming Friend Requests</h3>
             <ul class="space-y-3">
                 {% for receivedRequest in app.user.profile.receiverFriendRequest %}
                     <li class="flex justify-between items-center bg-blue-50 p-4 rounded">
-                        <span class="text-gray-700">From: <strong>{{ receivedRequest.sender.ofUser.email }}</strong></span>
+                        <span class="text-[#8D8484]">From: <strong>{{ receivedRequest.sender.ofUser.email }}</strong></span>
                         <div class="space-x-2">
                             <a href="{{ path('accept_friend_request', { id: receivedRequest.id }) }}"
                                class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600">
@@ -72,13 +72,12 @@
             </ul>
         </div>
 
-        <!-- My Friends -->
         <div>
-            <h3 class="text-xl font-bold text-gray-800 mb-4">👥 My Friends</h3>
+            <h3 class="text-xl font-bold text-[#8D8484] mb-4">👥 My Friends</h3>
             <ul class="space-y-3">
                 {% for friend in app.user.profile.getFriends() %}
                     <li class="flex justify-between items-center bg-green-50 p-4 rounded">
-                        <span class="text-gray-700">{{ friend.ofUser.email }}</span>
+                        <span class="text-[#8D8484]">{{ friend.ofUser.email }}</span>
                         <a href="#" class="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
                             💬 Chat
                         </a>

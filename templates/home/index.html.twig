@@ -1,8 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello HomeController!{% endblock %}
+{% block javascripts %}
+    <!-- Charger Chart.js depuis un CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
 
 {% block body %}
+{{ render_chart(chart) }}
 
 
 {% endblock %}

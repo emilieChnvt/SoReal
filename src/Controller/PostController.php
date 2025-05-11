@@ -111,9 +111,13 @@ final class PostController extends AbstractController
     #[Route('/post/delete/{id}', name: 'app_post_delete')]
     public function delete(Post $post, EntityManagerInterface $manager): Response
     {
-        if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles()) || $post->getAuthor()->getId() != $this->getUser()->getProfile()->getId()) {
+        if (
+            !$this->getUser() ||
+            ($post->getAuthor()->getId() !== $this->getUser()->getId() && !in_array('ROLE_ADMIN', $this->getUser()->getRoles()))
+        ) {
             return $this->redirectToRoute('app_login');
         }
+
 
         if (!$post) {
             return $this->redirectToRoute('app_posts');

@@ -42,7 +42,6 @@
         "symfony/ux-autocomplete": "^2.24",
         "symfony/ux-chartjs": "^2.24",
         "symfony/ux-icons": "^2.24",
-        "symfony/ux-notify": "^2.24",
         "symfony/ux-turbo": "^2.24",
         "symfony/validator": "7.2.*",
         "symfony/web-link": "7.2.*",
