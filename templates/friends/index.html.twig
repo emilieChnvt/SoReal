@@ -5,7 +5,12 @@
 
 
         <div>
-            <h3 class="text-xl font-bold text-[#8D8484] mb-4">🔍 Suggestions</h3>
+            <div>
+                <h3 class="text-xl font-bold text-[#8D8484] mb-4">🔍 Suggestions</h3>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+            </div>
             <div class="space-y-3">
                 {% for profile in profiles %}
                     {% if profile != app.user.profile and not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}

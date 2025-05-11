@@ -23,8 +23,11 @@ final class PostController extends AbstractController
         if(!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
+        $profile = $this->getUser()->getProfile();
+
+        $posts = $postRepository->findByFriends($profile);
         return $this->render('post/index.html.twig', [
-            'posts'=> $postRepository->findAll(),
+            'posts'=> $posts,
         ]);
     }
 
@@ -89,34 +92,28 @@ final class PostController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // Créer un nouveau post
         $post = new Post();
         $form = $this->createForm(PostForm::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Chercher l'ancien post de l'utilisateur
             $ancienPost = $postRepository->findOneBy(['author' => $this->getUser()->getProfile()], ['createAt' => 'DESC']);
 
             if ($ancienPost) {
-                // Supprimer l'ancien post
                 $manager->remove($ancienPost);
             }
 
-            // Créer un nouveau post
             $post->setCreateAt(new \DateTime());
             $post->setAuthor($this->getUser()->getProfile());
             $post->setImage($image);
 
-            // Sauvegarder le nouveau post
             $manager->persist($post);
             $manager->flush();
 
-            // Redirection vers la liste des posts
             return $this->redirectToRoute('app_posts');
         }
 
-        // Rendu du formulaire si la soumission n'est pas encore faite ou invalide
+
         return $this->render('post/create.html.twig', [
             'form' => $form->createView(),
             'image' => $image,

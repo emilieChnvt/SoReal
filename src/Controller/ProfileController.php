@@ -6,6 +6,7 @@ use App\Entity\Image;
 use App\Entity\Profile;
 use App\Form\ProfileForm;
 use App\Form\UserImageForm;
+use App\Form\UserSearchForm;
 use App\Repository\ProfileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,10 +18,13 @@ final class ProfileController extends AbstractController
 {
 
     #[Route('/profiles', name: 'profiles')]
-    public function index(ProfileRepository $profileRepository): Response
+    public function index(ProfileRepository $profileRepository, Request $request): Response
     {
+        $form = $this->createForm(UserSearchForm::class);
+        $form->handleRequest($request);
         return $this->render('friends/index.html.twig', [
             'profiles' => $profileRepository->findAll(),
+            'form' => $form
         ]);
     }
     #[Route('/profile/{id}', name: 'app_profile')]
