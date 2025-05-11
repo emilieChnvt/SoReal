@@ -29,6 +29,8 @@
             <div class="w-full text-center text-white text-xs font-normal break-words">{{ profile.getFriends()|length  }}</div>
             <div class="w-full text-center text-[#8D8484] text-xs font-normal break-words">Amis</div>
         </div>
+
+        <a href="{{ path('app_logout') }}">Se déconnecter</a>
     </div>
 
 {% endif %}

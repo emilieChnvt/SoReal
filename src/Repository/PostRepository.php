@@ -16,6 +16,18 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    public function countPostsByProfile(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('profile.displayName AS displayName', 'COUNT(p.id) AS post_count')
+            ->join('p.author', 'profile') // Assure-toi que la propriété s'appelle bien 'author'
+            ->groupBy('profile.id')
+            ->orderBy('post_count', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
     //    /**
     //     * @return Post[] Returns an array of Post objects
     //     */

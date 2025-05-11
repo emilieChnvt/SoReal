@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,38 +16,40 @@ use Symfony\UX\Chartjs\Model\Chart;
 final class AdminController extends AbstractController
 {
     #[Route('', name: 'app_admin')]
-    public function index(UserRepository $userRepository, ChartBuilderInterface $chartBuilder): Response
-    {
-        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+    public function index(
+        UserRepository $userRepository,
+        PostRepository $postRepository,
+        ChartBuilderInterface $chartBuilder
+    ): Response {
+        $postStats = $postRepository->countPostsByProfile();
 
+        $labels = array_column($postStats, 'displayName');
+        $data = array_column($postStats, 'post_count');
+
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
-            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            'datasets' => [
-                [
-                    'label' => 'My First dataset',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => [0, 10, 5, 2, 20, 30, 45],
-                ],
-            ],
+            'labels' => $labels,
+            'datasets' => [[
+                'label' => 'Nombre de posts par profil',
+                'backgroundColor' => 'rgba(75, 192, 192, 0.5)',
+                'borderColor' => 'rgba(75, 192, 192, 1)',
+                'borderWidth' => 1,
+                'data' => $data,
+            ]],
         ]);
 
         $chart->setOptions([
             'scales' => [
                 'y' => [
-                    'suggestedMin' => 0,
-                    'suggestedMax' => 100,
+                    'beginAtZero' => true,
                 ],
             ],
         ]);
-
         return $this->render('admin/index.html.twig', [
-            'users'=> $userRepository->findAll(),
+            'users' => $userRepository->findAll(),
             'chart' => $chart,
-
         ]);
     }
-
 
     #[Route('promote/{id}', name: 'app_promote')]
     public function promote(User $user, EntityManagerInterface $entityManager): Response
