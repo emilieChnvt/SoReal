@@ -13,12 +13,13 @@ class Friendship
     #[ORM\Column]
     private ?int $id = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'friendAsPersonA')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Profile $personA = null;
 
     #[ORM\ManyToOne(inversedBy: 'friendAsPersonB')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Profile $personB = null;
 
     public function getId(): ?int

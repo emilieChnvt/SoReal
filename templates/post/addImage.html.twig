@@ -1,15 +1,31 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/photo.css') }}">
+{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_row(form.imageFile, {
-        attr: {
-            'accept': 'image/*',
-            'capture': 'environment'
+
+
+<div class="flex mt-5 items-center justify-center">
+    {{ form_start(form, {
+        form_attr:{
+            clas:'flex mt-5 items-center justify-center'
         }
     }) }}
-    <button type="submit">Envoyer</button>
+    <label class="custom-upload">
+        <span class="camera-icon">📷</span>
+        <span>Prendre une photo</span>
+        {{ form_row(form.imageFile, {
+            attr: {
+                'accept': 'image/*',
+                'capture': 'environment'
+            }})
+        }}
+    </label>
+    <button type="submit" class="btn btn-primary">Envoyer</button>
     {{ form_end(form) }}
+</div>
+
 
 {% endblock %}
 

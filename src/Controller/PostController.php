@@ -83,28 +83,43 @@ final class PostController extends AbstractController
     }
 
     #[Route('/post/create/{id}', name: 'app_post_create')]
-    public function create(Request $request, EntityManagerInterface $manager, Image $image): Response
+    public function create(Request $request, EntityManagerInterface $manager, Image $image, PostRepository $postRepository): Response
     {
-        if(!$image || !$this->getUser()){
+        if (!$image || !$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
+        // Créer un nouveau post
         $post = new Post();
         $form = $this->createForm(PostForm::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Chercher l'ancien post de l'utilisateur
+            $ancienPost = $postRepository->findOneBy(['author' => $this->getUser()->getProfile()], ['createAt' => 'DESC']);
+
+            if ($ancienPost) {
+                // Supprimer l'ancien post
+                $manager->remove($ancienPost);
+            }
+
+            // Créer un nouveau post
             $post->setCreateAt(new \DateTime());
             $post->setAuthor($this->getUser()->getProfile());
             $post->setImage($image);
+
+            // Sauvegarder le nouveau post
             $manager->persist($post);
             $manager->flush();
+
+            // Redirection vers la liste des posts
             return $this->redirectToRoute('app_posts');
         }
-        return $this->render('post/create.html.twig', [
-            'form' => $form,
-            'image' => $image,
 
+        // Rendu du formulaire si la soumission n'est pas encore faite ou invalide
+        return $this->render('post/create.html.twig', [
+            'form' => $form->createView(),
+            'image' => $image,
         ]);
     }
 

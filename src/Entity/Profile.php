@@ -52,13 +52,13 @@ class Profile
     /**
      * @var Collection<int, Friendship>
      */
-    #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'personA')]
+    #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'personA', cascade: ['remove'])]
     private Collection $friendAsPersonA;
 
     /**
      * @var Collection<int, Friendship>
      */
-    #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'personB', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'personB', cascade: ['remove'])]
     private Collection $friendAsPersonB;
 
     /**
