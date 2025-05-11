@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
-    #[Route('/', name: 'home')]
+    #[Route('/home', name: 'home')]
     public function index(): Response
     {
         return new Response('<h1>Bienvenue sur SoReal !</h1>');
