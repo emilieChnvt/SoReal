@@ -28,7 +28,10 @@ final class FriendRequestController extends AbstractController
         $friendRequest->setReceiver($receiver);
 
         if(!$friendshipRequestRepository->findBy(['sender' => $sender, 'receiver' => $receiver])
-            && !$friendshipRequestRepository->findBy(['sender' => $receiver, 'receiver' => $sender])){
+            && !$friendshipRequestRepository->findBy(['sender' => $receiver, 'receiver' => $sender])
+            && !$this->getUser()->getProfile()->isFriendWith($friendRequest->getReceiver())
+
+        ){
             $entityManager->persist($friendRequest);
             $entityManager->flush();
         }

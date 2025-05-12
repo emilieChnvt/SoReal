@@ -301,20 +301,7 @@ class Profile
         return $this;
     }
 
-    public function isFriendWith(Profile $profile):bool
-    {
-        foreach ($this->friendAsPersonB as $friendShip) {
-            if($friendShip->getPersonA() === $profile){
-                return true;
-            }
-        }
-        foreach ($this->friendAsPersonA as $friendShip) {
-            if($friendShip->getPersonB() === $profile){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     /**
      * @return Collection<int, FriendshipRequest>
@@ -465,6 +452,20 @@ class Profile
         foreach($this->conversations as $conversation){
             if($conversation->getPartcipants()->contains($profile)){
                 return $conversation;
+            }
+        }
+        return false;
+    }
+    public function isFriendWith(Profile $profile):bool
+    {
+        foreach ($this->friendAsPersonB as $friendShip) {
+            if($friendShip->getPersonA() === $profile){
+                return true;
+            }
+        }
+        foreach ($this->friendAsPersonA as $friendShip) {
+            if($friendShip->getPersonB() === $profile){
+                return true;
             }
         }
         return false;

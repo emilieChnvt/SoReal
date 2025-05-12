@@ -16,7 +16,7 @@
                     label_attr: { class: 'text-white text-lg sm:text-xl font-semibold' },
                     row_attr: { class: 'flex flex-col gap-y-3' },
                     attr: {
-                        class: 'w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg focus:outline-none',
+                        class: 'w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg ',
                         placeholder: 'mail@mail.com'
                     }
                 }) }}
@@ -26,17 +26,20 @@
                     label_attr: { class: 'text-white text-lg sm:text-xl font-semibold' },
                     row_attr: { class: 'flex flex-col gap-y-3' },
                     attr: {
-                        class: 'w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg focus:outline-none',
+                        class: 'w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg ',
                         placeholder: 'Mot de passe'
                     }
                 }) }}
 
                 <div class="flex flex-col items-center gap-y-8">
                     <div class="flex items-center gap-x-3">
-                        {{ form_widget(registrationForm.agreeTerms) }}
-                        {{ form_label(registrationForm.agreeTerms, null, { label_attr: { class: 'text-white text-sm' } }) }}
+                        {{ form_widget(registrationForm.agreeTerms, { attr: { class: 'mr-2' } }) }}
+                        <label for="registration_form_agreeTerms" class="text-red-500 text-sm">
+                            J’accepte les conditions générales
+                        </label>
                         {{ form_errors(registrationForm.agreeTerms) }}
                     </div>
+
 
                     <button type="submit" class="bg-white text-black font-semibold py-3 px-6 rounded-xl text-sm hover:bg-gray-200 transition">
                         Créer mon compte

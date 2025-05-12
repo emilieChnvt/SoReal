@@ -3,7 +3,6 @@
 {% block body %}
     <div class="p-6  rounded-xl  max-w-3xl mx-auto mt-6 space-y-10">
 
-
         <div>
             <div>
                 <h3 class="text-xl font-bold text-[#8D8484] mb-4">🔍 Suggestions</h3>
@@ -29,7 +28,7 @@
                             <div class="flex items-center">
                                 {% if not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}
                                     <a href="{{ path('send_friend_request', { id: profile.id }) }}"
-                                       class=" px-2 bg-[#8D8484] text-sm text-white rounded-full hover:bg-green-600">
+                                       class=" px-2 bg-[#8D8484] text-sm text-white rounded-full ">
                                         Ajouter
                                     </a>
                                 {% endif %}
@@ -46,7 +45,7 @@
         </div>
 
         <div>
-            <h3 class="text-xl font-bold text-[#8D8484] mb-4">📤 Sent Friend Requests</h3>
+            <h3 class="text-xl font-bold text-[#8D8484] mb-4">📤 Demandes envoyées</h3>
             <ul class="space-y-3">
                 {% for sentRequest in app.user.profile.sentFriendRequest %}
                     <li class="flex justify-between  p-4 rounded gap-x-4">
@@ -58,7 +57,7 @@
         </div>
 
         <div>
-            <h3 class="text-xl font-bold text-[#8D8484] mb-4">📥 Incoming Friend Requests</h3>
+            <h3 class="text-xl font-bold text-[#8D8484] mb-4">📥 Demandes en attente</h3>
             <ul class="space-y-3">
                 {% for receivedRequest in app.user.profile.receiverFriendRequest %}
                     <li class="flex justify-between items-center bg-blue-50 p-4 rounded">
@@ -79,7 +78,7 @@
         </div>
 
         <div>
-            <h3 class="text-xl font-bold text-[#8D8484] mb-4">👥 My Friends</h3>
+            <h3 class="text-xl font-bold text-[#8D8484] mb-4">👥 Mes Amis</h3>
             <ul class="space-y-3">
                 {% for friend in app.user.profile.getFriends() %}
                     <li class="flex justify-between items-center bg-green-50 p-4 rounded">

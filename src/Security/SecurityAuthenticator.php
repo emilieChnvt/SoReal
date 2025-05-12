@@ -47,9 +47,15 @@ class SecurityAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
+        $user = $token->getUser(); // récupérer l'utilisateur connecté
 
+        if(!$user->getProfile()->getDisplayName()){
+            return new RedirectResponse($this->urlGenerator->generate('app_profile_edit', ['id'=> $user->getProfile()->getId()]));
+        }else{
+            return new RedirectResponse($this->urlGenerator->generate('app_posts'));
+
+        }
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_posts'));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
