@@ -1,4 +1,9 @@
 {% extends 'base.html.twig' %}
+{% block javascripts %}
+    <script type="module">
+        import '{{ asset('reaction.js') }}';
+    </script>
+{% endblock %}
 
 {% block body %}
     <div class="flex flex-col">
