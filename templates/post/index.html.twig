@@ -56,8 +56,10 @@
                     </div>
 
                     <div class="relative">
-                        <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}"
-                             alt="" class="w-full rounded mb-2">
+                        <a href="{{ path('app_post_show', {id:post.id}) }}">
+                            <img src="{{ vich_uploader_asset(post.image, 'imageFile') | imagine_filter('bereal') }}"
+                                 alt="" class="w-full rounded mb-2">
+                        </a>
                     </div>
 
                     <div class="flex justify-between">

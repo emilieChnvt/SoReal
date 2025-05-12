@@ -6,13 +6,11 @@ document.querySelectorAll(".share-button").forEach((btn) => {
             url: btn.dataset.url
         };
 
-        const resultPara = btn.closest("div").querySelector(".result");
+        const resultPara = btn.closest("div").querySelector(".result"); //closest contient les données title, text, url
 
-        try {
-            await navigator.share(shareData);
-            if (resultPara) resultPara.textContent = "Partagé avec succès !";
-        } catch (err) {
-            if (resultPara) resultPara.textContent = `Erreur : ${err}`;
-        }
+
+        await navigator.share(shareData);
+        if (resultPara) resultPara.textContent = "Partagé avec succès !";
+
     });
 });

@@ -17,7 +17,11 @@
 
 </head>
 
-{% include 'navbar/nav.html.twig' %}
+
+{%  if navbar is not defined or navbar %}
+    {% include 'navbar/nav.html.twig' %}
+{% endif %}
+
 
 <body>
 <div class="flex flex-col items-center h-full py-10">
