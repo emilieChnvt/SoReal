@@ -5,7 +5,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="min-h-screen bg-black flex justify-center px-4 py-6">
+    <div class=" bg-black flex flex-col items-center justify-center px-4 py-6 ">
         <form method="post" class="w-full max-w-md space-y-10">
             {% if error %}
                 <div class="text-red-500 text-sm text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -21,7 +21,6 @@
             <h1 class="text-white text-2xl font-bold text-center">Connexion</h1>
 
             <div class="flex flex-col gap-y-8">
-                <!-- Email -->
                 <div class="flex flex-col gap-y-3">
                     <label for="inputEmail" class="text-white text-lg sm:text-xl">Email</label>
                     <input
@@ -57,5 +56,7 @@
                 </div>
             </div>
         </form>
+        <a href="{{ path('app_register') }}" class="mt-[20px]"><p class="text-white text-sm underline">Don't have an account ? Register</p></a>
+
     </div>
 {% endblock %}

@@ -5,7 +5,7 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <div class="bg-black flex items-center r px-4 py-6  ">
+    <div class="bg-black flex flex-col items-center justify-center r px-4 py-6 gap-y-[20px] ">
         <div class="w-full max-w-md space-y-8">
             {{ form_errors(registrationForm) }}
 
@@ -14,7 +14,7 @@
             <div class="flex flex-col gap-y-10">
                 {{ form_row(registrationForm.email, {
                     label: 'Quel est ton adresse mail ?',
-                    label_attr: { class: 'text-white text-lg sm:text-xl font-semibold' },
+                    label_attr: { class: 'text-white text-lg sm:text-xl' },
                     row_attr: { class: 'flex flex-col gap-y-3' },
                     attr: {
                         class: 'w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg ',
@@ -24,7 +24,7 @@
 
                 {{ form_row(registrationForm.plainPassword, {
                     label: 'Entre un mot de passe',
-                    label_attr: { class: 'text-white text-lg sm:text-xl font-semibold' },
+                    label_attr: { class: 'text-white text-lg sm:text-xl' },
                     row_attr: { class: 'flex flex-col gap-y-3' },
                     attr: {
                         class: 'w-full text-white bg-transparent border-b border-gray-500 placeholder-[#8D8484] placeholder:text-lg ',
@@ -49,6 +49,9 @@
             </div>
 
             {{ form_end(registrationForm) }}
+
         </div>
+        <a href="{{ path('app_login') }}"><p class="text-white text-sm underline">Already have an account ? Log In</p></a>
+
     </div>
 {% endblock %}
