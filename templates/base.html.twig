@@ -11,7 +11,7 @@
     {% endblock %}
 
     {% block javascripts %}
-          {% block importmap %}{{ importmap() }}{% endblock %}
+          {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 
 
@@ -23,7 +23,7 @@
 {% endif %}
 
 
-<body>
+<body data-turbo="false">
 <div class="flex flex-col items-center h-full py-10">
     <h1 class="text-2xl text-white font-semibold">SoReal</h1>
     {% block body %}

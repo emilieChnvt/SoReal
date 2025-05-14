@@ -2,9 +2,7 @@
 
 {% block title %}Hello ! {{ app.user.profile.displayName }}{% endblock %}
 {% block javascripts %}
-    <script type="module">
-        import '{{ asset('share.js') }}';
-    </script>
+    {{ importmap('share') }}
 {% endblock %}
 {% block body %}
     <div class="space-y-6">
@@ -43,9 +41,9 @@
         {% for post in posts %}
             {% if post.author.ofUser != app.user.profile.ofUser %}
                 <div class="bg-black text-white p-4 rounded-lg">
-                    <div class="flex items-center mb-2">
+                    <a href="{{ path('app_profile', {id:post.author.ofUser.profile.id}) }}" class="flex items-center mb-2">
                         {% if post.author.image %}
-                            <img src="{{ vich_uploader_asset(post.author.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                            <img src="{{ vich_uploader_asset(post.author.image ) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
                         {% else %}
                             <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
                         {% endif %}
@@ -53,7 +51,7 @@
                             <strong>{{ post.author.displayName }}</strong><br>
                             <p>{{ post.createAt|date('d/m/Y H:i') }}</p>
                         </div>
-                    </div>
+                    </a>
 
                     <div class="relative">
                         <a href="{{ path('app_post_show', {id:post.id}) }}">

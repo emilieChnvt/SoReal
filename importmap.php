@@ -16,6 +16,14 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'reaction' => [
+        'path' => './assets/reaction.js',
+        'entrypoint' => true,
+    ],
+    'share' => [
+        'path' => './assets/share.js',
+        'entrypoint' => true,
+    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],

@@ -1,7 +1,8 @@
 {% block javascripts %}
-    <script type="module">
-        import '{{ asset('reaction.js') }}';
-    </script>
+    {% block importmap %}
+
+     {{ importmap('reaction') }}
+        {% endblock %}
 {% endblock %}
 
 <div class="flex space-x-4 items-center">
