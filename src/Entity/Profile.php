@@ -85,6 +85,18 @@ class Profile
     #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $messages;
 
+    /**
+     * @var Collection<int, Share>
+     */
+    #[ORM\OneToMany(targetEntity: Share::class, mappedBy: 'sender', orphanRemoval: true)]
+    private Collection $sentShares;
+
+    /**
+     * @var Collection<int, Share>
+     */
+    #[ORM\OneToMany(targetEntity: Share::class, mappedBy: 'recipient')]
+    private Collection $receivedShares;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -96,6 +108,8 @@ class Profile
         $this->receiverFriendRequest = new ArrayCollection();
         $this->conversations = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->sentShares = new ArrayCollection();
+        $this->receivedShares = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -447,14 +461,14 @@ class Profile
         return $this;
     }
 
-    public function isChattingWith(Profile $profile): Conversation | bool
+    public function isChattingWith(Profile $profile): ?Conversation
     {
         foreach($this->conversations as $conversation){
             if($conversation->getPartcipants()->contains($profile)){
                 return $conversation;
             }
         }
-        return false;
+        return null;
     }
     public function isFriendWith(Profile $profile):bool
     {
@@ -469,5 +483,65 @@ class Profile
             }
         }
         return false;
+    }
+
+    /**
+     * @return Collection<int, Share>
+     */
+    public function getSentShares(): Collection
+    {
+        return $this->sentShares;
+    }
+
+    public function addSentShare(Share $sentShare): static
+    {
+        if (!$this->sentShares->contains($sentShare)) {
+            $this->sentShares->add($sentShare);
+            $sentShare->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSentShare(Share $sentShare): static
+    {
+        if ($this->sentShares->removeElement($sentShare)) {
+            // set the owning side to null (unless already changed)
+            if ($sentShare->getSender() === $this) {
+                $sentShare->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Share>
+     */
+    public function getReceivedShares(): Collection
+    {
+        return $this->receivedShares;
+    }
+
+    public function addReceivedShare(Share $receivedShare): static
+    {
+        if (!$this->receivedShares->contains($receivedShare)) {
+            $this->receivedShares->add($receivedShare);
+            $receivedShare->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceivedShare(Share $receivedShare): static
+    {
+        if ($this->receivedShares->removeElement($receivedShare)) {
+            // set the owning side to null (unless already changed)
+            if ($receivedShare->getRecipient() === $this) {
+                $receivedShare->setRecipient(null);
+            }
+        }
+
+        return $this;
     }
 }

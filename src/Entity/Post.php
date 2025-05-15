@@ -42,10 +42,17 @@ class Post
     #[ORM\OneToMany(targetEntity: Reaction::class, mappedBy: 'post', orphanRemoval: true)]
     private Collection $reactions;
 
+    /**
+     * @var Collection<int, Share>
+     */
+    #[ORM\OneToMany(targetEntity: Share::class, mappedBy: 'post')]
+    private Collection $shares;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->reactions = new ArrayCollection();
+        $this->shares = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,6 +179,36 @@ class Post
             }
         }
         return false;
+    }
+
+    /**
+     * @return Collection<int, Share>
+     */
+    public function getShares(): Collection
+    {
+        return $this->shares;
+    }
+
+    public function addShare(Share $share): static
+    {
+        if (!$this->shares->contains($share)) {
+            $this->shares->add($share);
+            $share->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShare(Share $share): static
+    {
+        if ($this->shares->removeElement($share)) {
+            // set the owning side to null (unless already changed)
+            if ($share->getPost() === $this) {
+                $share->setPost(null);
+            }
+        }
+
+        return $this;
     }
 
 }

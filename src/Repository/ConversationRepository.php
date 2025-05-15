@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Conversation;
+use App\Entity\Profile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,6 +16,10 @@ class ConversationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Conversation::class);
     }
+// ConversationRepository.php
+
+
+
 
 //    /**
 //     * @return Conversation[] Returns an array of Conversation objects
