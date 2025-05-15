@@ -62,12 +62,21 @@
 
                     <div class="flex justify-between">
                         {% include 'reaction/reactions.html.twig' %}
-                        <button
-                                class="share-button rounded-full"
-                                data-title="Post de {{ post.author.displayName }}"
-                                data-url="{{ path('app_post_show', {id : post.id}) }}">
-                            {{ ux_icon('lucide:share', { class: 'w-[15px] h-[15px] text-white' }) }}
-                        </button>
+                        <div class=" flex items-center  gap-x-[20px]">
+                            <button
+                                    class="share-button rounded-full"
+                                    data-title="Post de {{ post.author.displayName }}"
+                                    data-url="{{ path('app_post_show', {id : post.id}) }}">
+                                {{ ux_icon('lucide:share', { class: 'w-[15px] h-[15px] text-white' }) }}
+                            </button>
+
+                            <a
+                                    class="share-button rounded-full"
+                                    data-title="Post de {{ post.author.displayName }}"
+                                    href="{{ path('app_share', {id:post.id}) }}">
+                                {{ ux_icon('bitcoin-icons:share-outline', { class: 'w-[15px] h-[15px] text-white' }) }}
+                            </a>
+                        </div>
                     </div>
                     <p>{{ post.content }}</p>
                     <a href="{{ path('app_post_show', {id : post.id}) }}" class="text-[#8D8484] text-sm mt-2 inline-block">

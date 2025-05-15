@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded',  ()=> {
                 .then(response => response.json())
                 .then(data => {
 
+
                     const type = this.dataset.type; // récupère type réactions
 
                     const countSpan = this.querySelector('.count');

@@ -3,38 +3,38 @@
 {% block title %}Chat{% endblock %}
 
 {% block body %}
-    <div class="flex flex-col h-screen">
+    <div class="flex flex-col h-screen bg-[#1e1e1e] text-white">
 
-        <!-- Zone messages -->
-        <div class="flex-1 overflow-y-auto space-y-6 text-white p-6 max-w-3xl mx-auto pb-24">
+        <div class="flex-1 overflow-y-auto p-6 space-y-4 max-w-2xl mx-auto w-full pb-28">
             {% for message in chat.messages %}
-                <div class="flex items-center justify-{{ message.author.ofUser == app.user.profile.ofUser ? 'end' : 'start' }} mb-4">
-                    <div class="bg-[#8D8484] border text-white rounded-lg p-4 max-w-xs w-auto">
-                        <p class="text-sm">
-                            <strong class="{{ message.author.ofUser == app.user.profile.ofUser ? 'text-right' : 'text-left' }} text-white">
-                                {{ message.author.ofUser.email }}
-                            </strong>
-                            : {{ message.content }}
-                        </p>
+                {% set isCurrentUser = message.author.id == app.user.profile.id %}
+                <div class="flex {{ isCurrentUser ? 'justify-end' : 'justify-start' }}">
+                    <div class="max-w-[70%] px-4 py-2 rounded-2xl text-sm shadow-md
+                                {{ isCurrentUser ? 'bg-blue-600 rounded-br-none' : 'bg-[#8D8484] rounded-bl-none' }}">
+                        <div class="mb-1 text-xs text-gray-300">
+                            {{ message.author.ofUser.email }}
+                        </div>
+                        <div class="text-white leading-snug break-words">
+                            {{ message.content|raw }}
+                        </div>
                     </div>
                 </div>
             {% else %}
-                <p class="text-center text-[#8D8484]">Aucun message pour le moment.</p>
+                <p class="text-center text-[#777]">Aucun message pour le moment.</p>
             {% endfor %}
         </div>
 
-
-        <div class="fixed bottom-0 left-0 right-0 p-4 mb-5 bg-[#8D8484] border-t border-[#7a7171]">
+        <div class="fixed bottom-0 left-0 right-0 p-4 bg-[#2b2b2b] border-t border-[#444]">
             {{ form_start(form) }}
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 max-w-2xl mx-auto">
                 {{ form_widget(form.content, {
                     'attr': {
-                        'placeholder': 'Entre ton message...',
-                        'class': 'flex-1 bg-transparent rounded px-3 py-2 text-sm placeholder-[#8D8484]'
+                        'placeholder': 'Envoyer un message...',
+                        'class': 'flex-1 bg-[#1e1e1e] border border-[#444] rounded-full px-4 py-2 text-sm text-white placeholder-[#666] focus:outline-none'
                     }
                 }) }}
-                <button type="submit" class="text-white">
-                    {{ ux_icon('raphael:arrowalt', { class: 'w-[15px] h-[15px]' }) }}
+                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white rounded-full p-2 transition">
+                    {{ ux_icon('raphael:arrowalt', { class: 'w-5 h-5' }) }}
                 </button>
             </div>
             {{ form_end(form) }}

@@ -92,10 +92,10 @@ return [
         'version' => '4.4.9',
     ],
     'tailwindcss' => [
-        'version' => '4.1.6',
+        'version' => '4.1.7',
     ],
     'tailwindcss/index.min.css' => [
-        'version' => '4.1.6',
+        'version' => '4.1.7',
         'type' => 'css',
     ],
     '@symfony/ux-autocomplete' => [
