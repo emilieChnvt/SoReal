@@ -1,11 +1,33 @@
+{% set navbar = false %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Chat{% endblock %}
 
 {% block body %}
-    <div class="flex flex-col h-screen bg-[#1e1e1e] text-white">
+    <div class="flex flex-col h-full justify-between text-white composer require league/oauth2-google">
+        <div class="flex justify-between mt-3">
+            <div>
+                <a href="{{ path('profiles') }}">{{ ux_icon('fluent:ios-arrow-24-filled', { class: 'w-[20px] h-[20px]' }) }}</a>
+            </div>
+            <div class="flex gap-x-[15px]">
 
-        <div class="flex-1 overflow-y-auto p-6 space-y-4 max-w-2xl mx-auto w-full pb-28">
+                <a href="{{ path('app_profile', {id: receiver.id}) }}" class="flex items-center mb-2">
+                    <div class="text-sm mx-2">
+                        <strong>{{ receiver.displayName }}</strong><br>
+                    </div>
+
+                    {% if receiver.image %}
+                        <img src="{{ vich_uploader_asset(receiver.image) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2" />
+                    {% else %}
+                        <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2" />
+                    {% endif %}
+
+                </a>
+
+            </div>
+        </div>
+        <div class="flex-1  p-6 space-y-4 max-w-2xl mx-auto w-full pb-28">
             {% for message in chat.messages %}
                 {% set isCurrentUser = message.author.id == app.user.profile.id %}
                 <div class="flex {{ isCurrentUser ? 'justify-end' : 'justify-start' }}">
@@ -24,7 +46,7 @@
             {% endfor %}
         </div>
 
-        <div class="fixed bottom-0 left-0 right-0 p-4 bg-[#2b2b2b] border-t border-[#444]">
+        <div class="fixed bottom-0 left-0 right-0 bg-[#2b2b2b] border-t border-[#444] py-4">
             {{ form_start(form) }}
             <div class="flex items-center gap-2 max-w-2xl mx-auto">
                 {{ form_widget(form.content, {

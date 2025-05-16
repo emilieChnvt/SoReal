@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/dbsoreal</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="dbsoreal@localhost [2]" uuid="026278f9-eeb9-407a-ac6b-fb7b485f43fc">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/dbsoreal</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

@@ -68,7 +68,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/routing" />
       <path value="$PROJECT_DIR$/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php84" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mailer" />
       <path value="$PROJECT_DIR$/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/vendor/symfony/config" />
       <path value="$PROJECT_DIR$/vendor/composer" />
@@ -123,7 +122,6 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/lines-of-code" />
       <path value="$PROJECT_DIR$/vendor/sebastian/type" />
       <path value="$PROJECT_DIR$/vendor/masterminds/html5" />
-      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
       <path value="$PROJECT_DIR$/vendor/sebastian/complexity" />
       <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
       <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
@@ -144,11 +142,6 @@
       <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
       <path value="$PROJECT_DIR$/vendor/symfonycasts/tailwind-bundle" />
-      <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mercure-bundle" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mercure" />
-      <path value="$PROJECT_DIR$/vendor/symfony/ux-notify" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mercure-notifier" />
       <path value="$PROJECT_DIR$/vendor/symfony/ux-autocomplete" />
       <path value="$PROJECT_DIR$/vendor/vich/uploader-bundle" />
       <path value="$PROJECT_DIR$/vendor/jms/metadata" />
@@ -156,6 +149,13 @@
       <path value="$PROJECT_DIR$/vendor/imagine/imagine" />
       <path value="$PROJECT_DIR$/vendor/symfony/ux-chartjs" />
       <path value="$PROJECT_DIR$/vendor/symfony/ux-icons" />
+      <path value="$PROJECT_DIR$/vendor/stripe/stripe-php" />
+      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/vendor/spomky-labs/otphp" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/vendor/scheb/2fa-bundle" />
+      <path value="$PROJECT_DIR$/vendor/scheb/2fa-google-authenticator" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
