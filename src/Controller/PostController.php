@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Image;
+use App\Entity\Notification;
 use App\Entity\Post;
 use App\Form\CommentForm;
 use App\Form\PostForm;
@@ -101,8 +102,22 @@ final class PostController extends AbstractController
             $post->setCreateAt(new \DateTime());
             $post->setAuthor($this->getUser()->getProfile());
             $post->setImage($image);
-
             $manager->persist($post);
+            $manager->flush();
+
+            foreach ($this->getUser()->getProfile()->getFriends() as $friend) {
+                $notification =new Notification();
+                $notification->setCreateAt(new \DateTime());
+                $notification->setType(1);
+                $notification->setContent('ca marche');
+                $notification->setProfile($friend);
+                $notification->setPostNotification($post);
+                $manager->persist($notification);
+
+            }
+
+
+
             $manager->flush();
 
             return $this->redirectToRoute('app_posts');
