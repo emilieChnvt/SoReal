@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Conversation;
 use App\Entity\Message;
+use App\Entity\Notification;
 use App\Entity\Profile;
 use App\Form\MessageForm;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,6 +42,12 @@ final class ChatController extends AbstractController
             return $this->redirectToRoute('profiles');
         }
 
+        foreach ($chat->getPartcipants() as $participant) {
+            if ($participant !== $this->getUser()->getProfile()) {
+                $receiver = $participant;
+            }
+        }
+
         $message = new Message();
         $form = $this->createForm(MessageForm::class, $message);
         $form->handleRequest($request);
@@ -48,8 +55,18 @@ final class ChatController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $message->setAuthor($this->getUser()->getProfile());
             $message->setConversation($chat);
-
             $manager->persist($message);
+
+
+
+            $notification =new Notification();
+            $notification->setCreateAt(new \DateTime());
+            $notification->setType(1);
+            $notification->setContent('message sent');
+            $notification->setProfile($receiver);
+            $notification->setMessageNotification($message);
+            $manager->persist($notification);
+
             $manager->flush();
 
             return $this->redirectToRoute('app_chat', ['id' => $chat->getId()]);
