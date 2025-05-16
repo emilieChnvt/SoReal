@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Partager ce post{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <div class="w-full h-full px-[112px] flex flex-col justify-start items-center gap-8 mt-10">
+
+            <h1 class="text-white text-3xl font-semibold mb-6">Partager ce post</h1>
+
+            {% if app.user.profile.friends is empty %}
+                <p class="text-[#8D8484] text-center">Vous n'avez pas encore d'amis pour partager ce post.</p>
+            {% else %}
+                <ul class="w-full max-w-md flex flex-col gap-4">
+                    {% for friend in app.user.profile.friends %}
+                        <li>
+                            <a href="{{ path('share_with', { post: post.id, recipientId: friend.id }) }}"
+                               class="flex items-center gap-4 p-3 rounded-lg border border-[#8D8484] hover:bg-[#8D8484] transition-colors duration-200">
+
+                                {% if friend.image %}
+                                    <img src="{{ vich_uploader_asset(friend.image ) }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                                {% else %}
+                                    <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full mr-2">
+                                {% endif %}
+
+                                <span class="text-white text-lg font-medium break-words">{{ friend.displayName }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+        </div>
+    {% else %}
+        <p class="text-center text-white mt-20">Vous devez être connecté pour partager un post.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello NotificationController!{% endblock %}
+
+{% block body %}
+<div>
+    {% for notification in notifications %}
+    <div class="border">
+
+        <span> {{ notification.profile.displayName }} vous a envoyé {{ notification.content }}</span>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
