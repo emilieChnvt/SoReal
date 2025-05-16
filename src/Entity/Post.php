@@ -48,6 +48,9 @@ class Post
     #[ORM\OneToMany(targetEntity: Share::class, mappedBy: 'post')]
     private Collection $shares;
 
+    #[ORM\ManyToOne(inversedBy: 'postNotification')]
+    private ?Notification $notification = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -207,6 +210,18 @@ class Post
                 $share->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNotification(): ?Notification
+    {
+        return $this->notification;
+    }
+
+    public function setNotification(?Notification $notification): static
+    {
+        $this->notification = $notification;
 
         return $this;
     }

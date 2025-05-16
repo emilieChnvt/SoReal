@@ -23,6 +23,9 @@ class Message
     #[ORM\ManyToOne(inversedBy: 'messages')]
     private ?Conversation $conversation = null;
 
+    #[ORM\OneToOne(mappedBy: 'messageNotification', cascade: ['persist', 'remove'])]
+    private ?Notification $notification = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,28 @@ class Message
     public function setConversation(?Conversation $conversation): static
     {
         $this->conversation = $conversation;
+
+        return $this;
+    }
+
+    public function getNotification(): ?Notification
+    {
+        return $this->notification;
+    }
+
+    public function setNotification(?Notification $notification): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($notification === null && $this->notification !== null) {
+            $this->notification->setMessageNotification(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($notification !== null && $notification->getMessageNotification() !== $this) {
+            $notification->setMessageNotification($this);
+        }
+
+        $this->notification = $notification;
 
         return $this;
     }

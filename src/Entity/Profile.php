@@ -97,6 +97,12 @@ class Profile
     #[ORM\OneToMany(targetEntity: Share::class, mappedBy: 'recipient')]
     private Collection $receivedShares;
 
+    /**
+     * @var Collection<int, Notification>
+     */
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'profile', orphanRemoval: true)]
+    private Collection $notifications;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -110,6 +116,7 @@ class Profile
         $this->messages = new ArrayCollection();
         $this->sentShares = new ArrayCollection();
         $this->receivedShares = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -539,6 +546,36 @@ class Profile
             // set the owning side to null (unless already changed)
             if ($receivedShare->getRecipient() === $this) {
                 $receivedShare->setRecipient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): static
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getProfile() === $this) {
+                $notification->setProfile(null);
             }
         }
 

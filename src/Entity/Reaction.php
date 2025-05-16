@@ -23,6 +23,9 @@ class Reaction
     #[ORM\JoinColumn(nullable: false)]
     private ?Post $post = null;
 
+    #[ORM\OneToOne(mappedBy: 'reactionNotification', cascade: ['persist', 'remove'])]
+    private ?Notification $notification = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,28 @@ class Reaction
     public function setPost(?Post $post): static
     {
         $this->post = $post;
+
+        return $this;
+    }
+
+    public function getNotification(): ?Notification
+    {
+        return $this->notification;
+    }
+
+    public function setNotification(?Notification $notification): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($notification === null && $this->notification !== null) {
+            $this->notification->setReactionNotification(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($notification !== null && $notification->getReactionNotification() !== $this) {
+            $notification->setReactionNotification($this);
+        }
+
+        $this->notification = $notification;
 
         return $this;
     }

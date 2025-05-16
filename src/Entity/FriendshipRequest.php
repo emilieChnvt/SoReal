@@ -21,6 +21,9 @@ class FriendshipRequest
     #[ORM\JoinColumn(nullable: false)]
     private ?Profile $receiver = null;
 
+    #[ORM\OneToOne(mappedBy: 'friendrequestNotification', cascade: ['persist', 'remove'])]
+    private ?Notification $notification = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +49,28 @@ class FriendshipRequest
     public function setReceiver(?Profile $receiver): static
     {
         $this->receiver = $receiver;
+
+        return $this;
+    }
+
+    public function getNotification(): ?Notification
+    {
+        return $this->notification;
+    }
+
+    public function setNotification(?Notification $notification): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($notification === null && $this->notification !== null) {
+            $this->notification->setFriendRequestNotification(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($notification !== null && $notification->getFriendRequestNotification() !== $this) {
+            $notification->setFriendRequestNotification($this);
+        }
+
+        $this->notification = $notification;
 
         return $this;
     }
