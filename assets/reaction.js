@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded',  ()=> {
 
                     if (data.isLiked) {
                         this.classList.add('bg-white', 'text-black');
-                        this.classList.remove('text-gray-400');
+                        this.classList.remove('text-gray-400', 'bg-transparent');
                     } else {
                         this.classList.remove('bg-white', 'text-black');
-                        this.classList.add('text-gray-400');
+                        this.classList.add('text-gray-400', 'bg-transparent');
                     }
                 });
         });
