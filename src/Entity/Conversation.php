@@ -28,6 +28,7 @@ class Conversation
     /**
      * @var Collection<int, Message>
      */
+    #[ORM\OrderBy(['createAt' => 'ASC'])]
     #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'conversation')]
     private Collection $messages;
 

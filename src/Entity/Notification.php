@@ -23,7 +23,7 @@ class Notification
     #[ORM\Column]
     private ?int $type = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTime $createAt = null;
 
     #[ORM\OneToOne(inversedBy: 'notification', cascade: ['persist', 'remove'])]

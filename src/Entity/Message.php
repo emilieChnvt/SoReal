@@ -26,6 +26,9 @@ class Message
     #[ORM\OneToOne(mappedBy: 'messageNotification', cascade: ['persist', 'remove'])]
     private ?Notification $notification = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +88,18 @@ class Message
         }
 
         $this->notification = $notification;
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(\DateTimeImmutable $createAt): static
+    {
+        $this->createAt = $createAt;
 
         return $this;
     }

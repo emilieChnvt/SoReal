@@ -8,6 +8,15 @@
         </a>
     </div>
 
+    <div class="w-[46px]  gap-1">
+        <a href="{{ path('app_notifications') }}" class="flex flex-col items-center">
+            <div class="w-[27px] h-[22px] text-[#8D8484]">
+                {{ ux_icon('mdi:bell', { class: 'text-[#8D8484] w-[27px] h-[22px]' }) }}
+            </div>
+            <div class="text-center text-white text-xs font-normal">Notifications</div>
+        </a>
+    </div>
+
     <div class="w-[60px] pb-[7px] flex flex-col items-start gap-2">
         <a href="">
             <div class="w-full p-2 bg-white rounded-[10px] flex justify-center items-center">
@@ -42,6 +51,7 @@
             </a>
         {% endif %}
     </div>
+
 
 </div>
 

@@ -38,8 +38,8 @@ final class FriendRequestController extends AbstractController
 
             $notification =new Notification();
             $notification->setCreateAt(new \DateTime());
-            $notification->setType(1);
-            $notification->setContent('friend_request sent');
+            $notification->setType(2);
+            $notification->setContent("Demande d'amis envoyé");
             $notification->setProfile($receiver);
             $notification->setFriendRequestNotification($friendRequest);
             $entityManager->persist($notification);

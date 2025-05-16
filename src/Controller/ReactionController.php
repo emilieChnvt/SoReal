@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Entity\Post;
 use App\Entity\Reaction;
 use App\Repository\ReactionRepository;
@@ -35,7 +36,16 @@ final class ReactionController extends AbstractController
             $entityManager->persist($reaction);
             $isLiked = true;
 
+            $notification =new Notification();
+            $notification->setCreateAt(new \DateTime());
+            $notification->setType(4);
+            $notification->setContent('reactions');
+            $notification->setProfile($reaction->getAuthor());
+            $notification->setReactionNotification($reaction);
+            $entityManager->persist($notification);
+
         }
+
         $entityManager->flush();
 
         return $this->json([
