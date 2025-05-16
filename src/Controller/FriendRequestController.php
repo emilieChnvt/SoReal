@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Friendship;
 use App\Entity\FriendshipRequest;
+use App\Entity\Notification;
 use App\Entity\Profile;
 use App\Form\UserSearchForm;
 use App\Repository\FriendshipRequestRepository;
@@ -18,7 +19,7 @@ final class FriendRequestController extends AbstractController
 
 
     #[Route('/send/{id}', name: 'send_friend_request')]
-    public function send(Profile $profile, EntityManagerInterface $entityManager, FriendshipRequestRepository $friendshipRequestRepository): Response
+    public function send(Profile $profile, EntityManagerInterface $entityManager,  FriendshipRequestRepository $friendshipRequestRepository): Response
     {
 
         $sender = $this->getUser()->getProfile();
@@ -30,11 +31,22 @@ final class FriendRequestController extends AbstractController
         if(!$friendshipRequestRepository->findBy(['sender' => $sender, 'receiver' => $receiver])
             && !$friendshipRequestRepository->findBy(['sender' => $receiver, 'receiver' => $sender])
             && !$this->getUser()->getProfile()->isFriendWith($friendRequest->getReceiver())
-
         ){
             $entityManager->persist($friendRequest);
             $entityManager->flush();
         }
+
+            $notification =new Notification();
+            $notification->setCreateAt(new \DateTime());
+            $notification->setType(1);
+            $notification->setContent('friend_request sent');
+            $notification->setProfile($receiver);
+            $notification->setFriendRequestNotification($friendRequest);
+            $entityManager->persist($notification);
+
+
+
+        $entityManager->flush();
 
 
 

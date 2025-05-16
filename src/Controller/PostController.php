@@ -109,14 +109,12 @@ final class PostController extends AbstractController
                 $notification =new Notification();
                 $notification->setCreateAt(new \DateTime());
                 $notification->setType(1);
-                $notification->setContent('ca marche');
+                $notification->setContent('possssttttnotifs');
                 $notification->setProfile($friend);
                 $notification->setPostNotification($post);
                 $manager->persist($notification);
 
             }
-
-
 
             $manager->flush();
 
