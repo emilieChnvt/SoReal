@@ -9,6 +9,7 @@ use App\Entity\Post;
 use App\Form\CommentForm;
 use App\Form\PostForm;
 use App\Form\UserImageForm;
+use App\Repository\NotificationRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,7 +84,7 @@ final class PostController extends AbstractController
     }
 
     #[Route('/post/create/{id}', name: 'app_post_create')]
-    public function create(Request $request, EntityManagerInterface $manager, Image $image, PostRepository $postRepository): Response
+    public function create(Request $request, NotificationRepository $notificationRepository, EntityManagerInterface $manager, Image $image, PostRepository $postRepository): Response
     {
         if (!$image || !$this->getUser()) {
             return $this->redirectToRoute('app_login');
@@ -97,6 +98,11 @@ final class PostController extends AbstractController
             $ancienPost = $postRepository->findOneBy(['author' => $this->getUser()->getProfile()], ['createAt' => 'DESC']);
 
             if ($ancienPost) {
+                $notifications = $notificationRepository->findBy(['postNotification' => $ancienPost]);
+
+                foreach ($notifications as $notif) {
+                    $manager->remove($notif);
+                }
                 $manager->remove($ancienPost);
             }
 
@@ -133,7 +139,7 @@ final class PostController extends AbstractController
     }
 
     #[Route('/post/delete/{id}', name: 'app_post_delete')]
-    public function delete(Post $post, EntityManagerInterface $manager): Response
+    public function delete(Post $post, EntityManagerInterface $manager, NotificationRepository $notificationRepository): Response
     {
         if (
             !$this->getUser() ||
@@ -151,6 +157,12 @@ final class PostController extends AbstractController
         if ($image) {
             $manager->remove($image);
         }
+        $notifications = $notificationRepository->findBy(['postNotification' => $post]);
+
+        foreach ($notifications as $notif) {
+            $manager->remove($notif);
+        }
+
 
         $manager->remove($post);
         $manager->flush();

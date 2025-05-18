@@ -16,7 +16,6 @@ class ProfileAutocompleteField extends AbstractType
         $resolver->setDefaults([
             'class' => Profile::class,
             'placeholder' => 'Choose a Profile',
-            'choice_label' => 'displayName',
             'multiple' => true,
             'autocomplete' => true,
             // 'choice_label' => 'name',
