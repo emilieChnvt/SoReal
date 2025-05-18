@@ -78,6 +78,7 @@ final class PostController extends AbstractController
 
         return $this->render('post/addImage.html.twig', [
             'form' => $form,
+            'image' => $image,
         ]);
     }
 
@@ -110,6 +111,9 @@ final class PostController extends AbstractController
                 $notification->setCreateAt(new \DateTime());
                 $notification->setType(1);
                 $notification->setContent('possssttttnotifs');
+                $notification->setAuthor($this->getUser()->getProfile());
+                $notification->setIsSeen(false);
+
                 $notification->setProfile($friend);
                 $notification->setPostNotification($post);
                 $manager->persist($notification);

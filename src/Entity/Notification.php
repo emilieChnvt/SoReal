@@ -42,6 +42,13 @@ class Notification
     #[ORM\ManyToOne(inversedBy: 'notifications')]
     private ?Post $postNotification = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Profile $author = null;
+
+    #[ORM\Column]
+    private ?bool $isSeen = null;
+
 
 
     public function getId(): ?int
@@ -156,6 +163,30 @@ class Notification
     public function setPostNotification(?Post $postNotification): static
     {
         $this->postNotification = $postNotification;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Profile
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Profile $author): static
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function isSeen(): ?bool
+    {
+        return $this->isSeen;
+    }
+
+    public function setIsSeen(bool $isSeen): static
+    {
+        $this->isSeen = $isSeen;
 
         return $this;
     }

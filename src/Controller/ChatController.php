@@ -66,6 +66,9 @@ final class ChatController extends AbstractController
             $notification->setType(3);
             $notification->setContent('message sent');
             $notification->setProfile($receiver);
+            $notification->setIsSeen(false);
+
+            $notification->setAuthor($this->getUser()->getProfile());
             $notification->setMessageNotification($message);
             $manager->persist($notification);
 

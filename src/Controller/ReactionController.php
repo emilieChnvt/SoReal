@@ -41,6 +41,9 @@ final class ReactionController extends AbstractController
             $notification->setType(4);
             $notification->setContent('reactions');
             $notification->setProfile($reaction->getAuthor());
+            $notification->setAuthor($this->getUser()->getProfile());
+            $notification->setIsSeen(false);
+
             $notification->setReactionNotification($reaction);
             $entityManager->persist($notification);
 

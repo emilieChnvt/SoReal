@@ -1,39 +1,89 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Notifications{% endblock %}
+{% block javascripts %}
+    {% block importmap %}
 
+        {{ importmap('isSeen') }}
+    {% endblock %}
+{% endblock %}
 {% block body %}
     <div class="container my-4">
         <h2 class="mb-4 text-white">Vos notifications</h2>
 
         {% for notification in notifications %}
-            <div class="notification-card border rounded p-4 mb-3 shadow-sm bg-light">
+            <div class="notifs notification-card border rounded p-4 mb-3  bg-white">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <strong class="text-primary">
-                        {{ notification.profile.displayName }}
+                        {{ notification.author.displayName }}
                     </strong>
                     <small class="text-muted">
                         {{ notification.createAt|date('d/m/Y H:i') }}
                     </small>
                 </div>
 
-                <div>
+                <div >
                     {% if notification.type == 1 and notification.postNotification %}
-                        📸 <a href="{{ path('app_post_show', { id: notification.postNotification.id }) }}" class="text-decoration-none text-dark">
-                        a publié une nouvelle photo.
-                    </a>
+                        <div class="flex items-center gap-x-[20px]">
+                            📸 <a href="{{ path('app_post_show', { id: notification.postNotification.id }) }}" class="text-decoration-none text-dark">
+                                a publié une nouvelle photo.
+                            </a>
+                            {% if not notification.isSeen %}
+                                <a href="{{ path('app_notification_isseen', {id:notification.id}) }}"
+                                   class="seen border rounded-full p-2"
+                                   data-id="{{ notification.id }}">
+                                    {{ ux_icon('fa6-solid:check', { class: 'w-[15px] h-[15px]' }) }}
+                                </a>
+                            {% endif %}
+                        </div>
                     {% elseif notification.type == 2 and notification.friendRequestNotification %}
-                        🤝 <a href="{{ path('app_profile', { id: notification.profile.id }) }}" class="text-decoration-none text-dark">
-                        vous a envoyé une demande d’ami.
-                    </a>
+                        <div class="flex items-center gap-x-[20px]">
+                            🤝 <a href="{{ path('app_profile', { id: notification.profile.id }) }}" class="text-decoration-none text-dark">
+                                vous a envoyé une demande d’ami.
+                            </a>
+                            {% if not notification.isSeen %}
+                                <a href="{{ path('app_notification_isseen', {id:notification.id}) }}"
+                                   class="seen border rounded-full p-2"
+                                   data-id="{{ notification.id }}">
+                                    {{ ux_icon('fa6-solid:check', { class: 'w-[15px] h-[15px]' }) }}
+                                </a>
+                            {% endif %}
+                        </div>
                     {% elseif notification.type == 3 and notification.messageNotification %}
-                        💬 <a href="{{ path('app_chat', { id: notification.messageNotification.conversation.id }) }}" class="text-decoration-none text-dark">
-                        vous a envoyé un message.
-                    </a>
+                        <div class="flex items-center gap-x-[20px]">
+                            💬 <a href="{{ path('app_chat', { id: notification.messageNotification.conversation.id }) }}" class="text-decoration-none text-dark">
+                                vous a envoyé un message.
+                            </a>
+                            {% if not notification.isSeen %}
+                                <a href="{{ path('app_notification_isseen', {id:notification.id}) }}"
+                                   class="seen border rounded-full p-2"
+                                   data-id="{{ notification.id }}">
+                                    {{ ux_icon('fa6-solid:check', { class: 'w-[15px] h-[15px]' }) }}
+                                </a>
+                            {% endif %}
+                        </div>
                     {% elseif notification.type == 4 %}
-                        ❤️ <span>a réagi à votre publication.</span>
+                        <div class="flex items-center gap-x-[20px]">
+                            ❤️ <span>a réagi à votre publication.</span>
+                            {% if not notification.isSeen %}
+                                <a href="{{ path('app_notification_isseen', {id:notification.id}) }}"
+                                   class="seen border rounded-full p-2"
+                                   data-id="{{ notification.id }}">
+                                    {{ ux_icon('fa6-solid:check', { class: 'w-[15px] h-[15px]' }) }}
+                                </a>
+                            {% endif %}
+                        </div>
                     {% else %}
-                        🔔 <span>{{ notification.content }}</span>
+                        <div class="flex items-center gap-x-[20px]">
+                            🔔 <span>{{ notification.content }}</span>
+                            {% if not notification.isSeen %}
+                                <a href="{{ path('app_notification_isseen', {id:notification.id}) }}"
+                                   class="seen border rounded-full p-2"
+                                   data-id="{{ notification.id }}">
+                                    {{ ux_icon('fa6-solid:check', { class: 'w-[15px] h-[15px]' }) }}
+                                </a>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 </div>
             </div>

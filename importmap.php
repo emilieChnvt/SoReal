@@ -24,6 +24,10 @@ return [
         'path' => './assets/share.js',
         'entrypoint' => true,
     ],
+    'isSeen' => [
+        'path' => './assets/isSeen.js',
+        'entrypoint' => true,
+    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],

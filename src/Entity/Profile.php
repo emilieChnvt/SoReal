@@ -103,6 +103,8 @@ class Profile
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'profile', orphanRemoval: true)]
     private Collection $notifications;
 
+
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -581,4 +583,6 @@ class Profile
 
         return $this;
     }
+
+
 }
