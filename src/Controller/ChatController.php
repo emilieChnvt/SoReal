@@ -54,6 +54,7 @@ final class ChatController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $message->setCreateAt(new \DateTimeImmutable());
+            $message->setType(1);
             $message->setAuthor($this->getUser()->getProfile());
             $message->setConversation($chat);
             $manager->persist($message);

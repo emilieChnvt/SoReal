@@ -58,6 +58,8 @@ final class ShareController extends AbstractController
         $message->setAuthor($this->getUser()->getProfile());
         $message->setConversation($conversation);
         $message->setContent("📎 Post partagé : $postUrl");
+        $message->setCreateAt(new \DateTimeImmutable());
+        $message->setType(2);
         $manager->persist($message);
         $manager->flush();
 
