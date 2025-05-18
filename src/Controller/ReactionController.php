@@ -40,7 +40,7 @@ final class ReactionController extends AbstractController
             $notification->setCreateAt(new \DateTime());
             $notification->setType(4);
             $notification->setContent('reactions');
-            $notification->setProfile($reaction->getAuthor());
+            $notification->setProfile($post->getAuthor());
             $notification->setAuthor($this->getUser()->getProfile());
             $notification->setIsSeen(false);
 

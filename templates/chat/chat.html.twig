@@ -5,58 +5,60 @@
 {% block title %}Chat{% endblock %}
 
 {% block body %}
-    <div class="flex flex-col h-full justify-between text-white w-full max-w-full sm:max-w-2xl mx-auto px-4">
-        <div class="flex justify-between items-center mt-3 w-full">
-            <a href="{{ path('profiles') }}">
-                {{ ux_icon('fluent:ios-arrow-24-filled', { class: 'w-[20px] h-[20px]' }) }}
-            </a>
-            <a href="{{ path('app_profile', {id: receiver.id}) }}" class="flex   items-center text-center sm:text-left mb-2">
-                <div class="text-sm mx-2">
-                    <strong>{{ receiver.displayName }}</strong><br>
-                </div>
+    <div class="w-full flex items-center justify-center " >
+        <div class="mx-auto px-4 max-w-md flex flex-col h-full justify-between text-white  w-full">
+            <div class="flex justify-between items-center mt-3 w-full">
+                <a href="{{ path('profiles') }}"  class="">
+                    {{ ux_icon('fluent:ios-arrow-24-filled', { class: 'w-[20px] h-[20px]' }) }}
+                </a>
+                <a href="{{ path('app_profile', {id: receiver.id}) }}" class="flex   items-center text-center sm:text-left mb-2">
+                    <div class="text-sm mx-2">
+                        <strong>{{ receiver.displayName }}</strong><br>
+                    </div>
 
-                {% if receiver.image %}
-                    <img src="{{ vich_uploader_asset(receiver.image) }}" alt="Profil" class="w-8 h-8 rounded-full sm:mr-2 mt-1 sm:mt-0" />
-                {% else %}
-                    <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full sm:mr-2 mt-1 sm:mt-0" />
-                {% endif %}
-            </a>
-        </div>
+                    {% if receiver.image %}
+                        <img src="{{ vich_uploader_asset(receiver.image) }}" alt="Profil" class="w-8 h-8 rounded-full sm:mr-2 mt-1 sm:mt-0" />
+                    {% else %}
+                        <img src="{{ asset('images/avatar.jpg') }}" alt="Profil" class="w-8 h-8 rounded-full sm:mr-2 mt-1 sm:mt-0" />
+                    {% endif %}
+                </a>
+            </div>
 
-        <div class="flex flex-col p-6 space-y-4 w-full pb-28">
-            {% for message in chat.messages %}
-                {% set isCurrentUser = message.author.id == app.user.profile.id %}
-                <div class="flex {{ isCurrentUser ? 'justify-end' : 'justify-start' }}"> {# ca ne marcge pas je ne sais pas pourquoi #}
-                    <div class=" sm:max-w-[70%] px-4 py-2 rounded-2xl text-sm
+            <div class="flex flex-col p-6 space-y-4 w-full pb-28">
+                {% for message in chat.messages %}
+                    {% set isCurrentUser = message.author.id == app.user.profile.id %}
+                    <div class="flex {{ isCurrentUser ? 'justify-end' : 'justify-start' }}"> {# ca ne marcge pas je ne sais pas pourquoi #}
+                        <div class=" sm:max-w-[70%] px-4 py-2 rounded-2xl text-sm
                         {{ isCurrentUser ? 'bg-blue-600 rounded-br-none' : 'bg-[#8D8484] rounded-bl-none' }}">
 
-                        <div class="mb-1 text-xs text-gray-300 break-words break-all">
-                            {{ message.author.ofUser.email }}
-                        </div>
-                        <div class="text-white  break-words break-all overflow-hidden">
-                            {{ message.content|raw }}
+                            <div class="mb-1 text-xs text-gray-300 break-words break-all">
+                                {{ message.author.ofUser.email }}
+                            </div>
+                            <div class="text-white  break-words break-all overflow-hidden">
+                                {{ message.content|raw }}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% else %}
-                <p class="text-center text-[#777]">Aucun message pour le moment.</p>
-            {% endfor %}
-        </div>
-
-        <div class="fixed bottom-0 left-0 right-0  bg-[#2b2b2b] border-t border-[#444] py-4">
-            {{ form_start(form) }}
-            <div class="flex items-center gap-2 w-full max-w-full sm:max-w-2xl mx-auto px-4">
-                {{ form_widget(form.content, {
-                    'attr': {
-                        'placeholder': 'Envoyer un message...',
-                        'class': 'flex-1 bg-[#1e1e1e] border border-[#444] rounded-full px-4 py-2 text-sm text-white placeholder-[#666] focus:outline-none'
-                    }
-                }) }}
-                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white rounded-full p-2 transition">
-                    {{ ux_icon('raphael:arrowalt', { class: 'w-5 h-5' }) }}
-                </button>
+                {% else %}
+                    <p class="text-center text-[#777]">Aucun message pour le moment.</p>
+                {% endfor %}
             </div>
-            {{ form_end(form) }}
+
+            <div class="fixed bottom-0 left-0 right-0  bg-[#2b2b2b] border-t border-[#444] py-4">
+                {{ form_start(form) }}
+                <div class="flex items-center gap-2 w-full max-w-full sm:max-w-2xl mx-auto px-4">
+                    {{ form_widget(form.content, {
+                        'attr': {
+                            'placeholder': 'Envoyer un message...',
+                            'class': 'flex-1 bg-[#1e1e1e] border border-[#444] rounded-full px-4 py-2 text-sm  placeholder-[#666] focus:outline-none'
+                        }
+                    }) }}
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white rounded-full p-2 transition">
+                        {{ ux_icon('raphael:arrowalt', { class: 'w-5 h-5' }) }}
+                    </button>
+                </div>
+                {{ form_end(form) }}
+            </div>
         </div>
     </div>
 {% endblock %}
