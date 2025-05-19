@@ -28,7 +28,7 @@ final class ProfileController extends AbstractController
         ]);
     }
     #[Route('/profile/{id}', name: 'app_profile')]
-    public function show(Profile $profile): Response
+    public function show(Profile $profile,): Response
     {
         return $this->render('profile/index.html.twig', [
             'profile'=>$profile,
@@ -77,5 +77,30 @@ final class ProfileController extends AbstractController
             'imageForm'=>$imageForm->createView(),
         ]);
 
+    }
+
+    #[Route('/search/profile', name: 'app_search_post')]
+    public function search( Request $request, EntityManagerInterface $manager, ProfileRepository $profileRepository): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+
+        $profile = null;
+        $form = $this->createForm(ProfileForm::class, $profile, [
+            'include_bio' => false,  // Bio pas affiché
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $displayName = $form->getData()->getDisplayName();
+
+            $profile = $profileRepository->findOneBy(['displayName' => $displayName]);
+            return $this->redirectToRoute('app_profile', ['id' => $profile->getId()]);
+        }
+       return $this->render('friends/index.html.twig', [
+           'profiles' => $manager->getRepository(Profile::class)->findAll(),
+           'form' => $form
+       ]);
     }
 }

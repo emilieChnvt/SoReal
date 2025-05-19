@@ -1,15 +1,38 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <style>
+
+    </style>
     <div class="p-6  rounded-xl  max-w-3xl mx-auto mt-6 space-y-10">
 
         <div>
-            <div>
+
                 <h3 class="text-xl font-bold text-[#8D8484] mb-4">🔍 Suggestions</h3>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
+                <div class="bg-[#8D8484]  shadow-md rounded-lg p-6">
+                    {{ form_start(form, {'attr': {'class': 'space-y-4'}, 'action': path('app_search_post')}) }}
+
+                    <div>
+                        {{ form_widget(form.displayName, {
+                            'attr': {
+                                'class': 'text-black bg-white mt-1 block w-full rounded-md border border-gray-300 shadow-sm placeholder-gray-500'
+                            }
+                        }) }}
+                        {{ form_errors(form.displayName) }}
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                             Voir le profil
+                        </button>
+                    </div>
+
+                    {{ form_end(form) }}
             </div>
+
+
+
+
             <div class="space-y-3">
                 {% for profile in profiles %}
                     {% if profile != app.user.profile and not app.user.profile.isFriendWith(profile) and not app.user.profile.isPendingSendRequest(profile) %}

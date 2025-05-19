@@ -18,15 +18,19 @@ class ProfileForm extends AbstractType
     {
         $builder
             ->add('displayName')
-            ->add('Bio')
+
 
         ;
+        if ($options['include_bio']) {
+            $builder->add('Bio', );
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Profile::class,
+            'include_bio' => true,
         ]);
     }
 }
